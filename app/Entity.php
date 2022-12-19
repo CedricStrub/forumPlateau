@@ -10,9 +10,9 @@
                 //field = marque_id
                 //fieldarray = ['marque','id']
                 $fieldArray = explode("_", $field);
-
                 if(isset($fieldArray[1]) && $fieldArray[1] == "id"){
-                    $manName = ucfirst($fieldArray[0])."Manager";
+
+                    $manName = "Manager".ucfirst($fieldArray[0]);
                     $FQCName = "Model\Managers".DS.$manName;
                     
                     $man = new $FQCName();
