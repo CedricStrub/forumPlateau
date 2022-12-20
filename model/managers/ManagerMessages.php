@@ -10,9 +10,22 @@
         protected $className = "Model\Entities\Message";
         protected $tableName = "messages";
 
-
         public function __construct(){
             parent::connect();
+        }
+
+        public function findMsgByPost($id){
+            var_dump($this->tableName);
+            
+            $sql = "SELECT m.texte
+                FROM sujets a
+                INNER JOIN messages m ON a.id_sujets = m.id_sujets
+                WHERE a.id_sujets = :id" ;
+
+            return $this->getMultipleResults(
+                DAO::select($sql, ['id' => $id]),
+                $this->className
+            );
         }
 
     }
