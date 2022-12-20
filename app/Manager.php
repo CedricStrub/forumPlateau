@@ -24,11 +24,11 @@
                     ".$orderQuery;
 
             return $this->getMultipleResults(
-                DAO::select($sql),
+                DAO::select($sql), 
                 $this->className
             );
         }
-    
+       
         public function findOneById($id){
 
             $sql = "SELECT *

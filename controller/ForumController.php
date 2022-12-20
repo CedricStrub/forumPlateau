@@ -12,15 +12,17 @@
     
     class ForumController extends AbstractController implements ControllerInterface{
 
-        public function index(){
+        public function listSujets($id){
 
 
             $managerSujet = new SujetManager();
+            $managerCategorie = new CategorieManager();
 
             return [
                 "view" => VIEW_DIR."forum/listSujets.php",
                 "data" => [
-                    "sujets" => $managerSujet->findAll(["dateCreation", "DESC"])
+                    "categorie" => $managerCategorie->findOneById($id),
+                    "sujets" => $managerSujet->findPostByTopic($id)
                 ]
             ];
         
@@ -33,7 +35,7 @@
             return[
                 "view" => VIEW_DIR."forum/listCategories.php",
                 "data" => [
-                    "categorie" => $managerCategorie->findAll(["nom", "ASC"])
+                    "categories" => $managerCategorie->findAll(["nom", "ASC"])
                 ]
             ];
 

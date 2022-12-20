@@ -12,7 +12,7 @@
                 $fieldArray = explode("_", $field);
                 if(isset($fieldArray[1]) && $fieldArray[1] == "id"){
 
-                    $manName = "Manager".ucfirst($fieldArray[0]);
+                    $manName = ucfirst($fieldArray[0])."Manager";
                     $FQCName = "Model\Managers".DS.$manName;
                     
                     $man = new $FQCName();
