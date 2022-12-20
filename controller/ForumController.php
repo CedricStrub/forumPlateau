@@ -5,17 +5,17 @@
     use App\Session;
     use App\AbstractController;
     use App\ControllerInterface;
-    use Model\Managers\ManagerSujets;
-    use Model\Managers\ManagerCategories;
-    use Model\Managers\ManagerMessages;
-    use Model\Managers\PostManager;
+    use Model\Managers\SujetManager;
+    use Model\Managers\CategorieManager;
+    use Model\Managers\MessageManager;
+    use Model\Managers\MembreManager;
     
     class ForumController extends AbstractController implements ControllerInterface{
 
         public function index(){
 
 
-           $managerSujet = new ManagerSujets();
+            $managerSujet = new SujetManager();
 
             return [
                 "view" => VIEW_DIR."forum/listSujets.php",
@@ -28,12 +28,12 @@
 
         public function listCategories(){
 
-            $managerCategorie = new ManagerCategories();
+            $managerCategorie = new CategorieManager();
 
             return[
                 "view" => VIEW_DIR."forum/listCategories.php",
                 "data" => [
-                    "categories" => $managerCategorie->findAll(["nom", "ASC"])
+                    "categorie" => $managerCategorie->findAll(["nom", "ASC"])
                 ]
             ];
 
@@ -41,7 +41,7 @@
 
         public function listMessages(){
 
-            $managerMessages = new ManagerMessages();
+            $managerMessages = new MessageManager();
 
             return[
                 "view" => VIEW_DIR."forum/listMessages.php",
