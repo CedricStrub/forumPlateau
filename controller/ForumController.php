@@ -41,14 +41,17 @@
 
         }
 
-        public function listMessages(){
+        public function listMessages($id){
 
             $managerMessages = new MessageManager();
+            $managerSujet = new SujetManager();
 
             return[
                 "view" => VIEW_DIR."forum/listMessages.php",
                 "data" => [
-                    "messages" => $managerMessages->findAll(["texte", "ASC"])
+
+                    "sujet" => $managerSujet->findOneById($id),
+                    "messages" => $managerMessages->findMsgByPost($id)
                 ]
             ];
 

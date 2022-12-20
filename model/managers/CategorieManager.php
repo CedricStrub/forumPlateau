@@ -8,7 +8,7 @@
     class CategorieManager extends Manager{
 
         protected $className = "Model\Entities\Categorie";
-        protected $tableName = "categories";
+        protected $tableName = "categorie";
 
 
         public function __construct(){

@@ -8,7 +8,6 @@ $messages = $result["data"]['messages'];
 
 <?php
 foreach($messages as $message ){
-
     ?>
     <p><?=$message->getTexte()?></p>
     <?php

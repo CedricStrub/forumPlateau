@@ -8,7 +8,7 @@
     class SujetManager extends Manager{
 
         protected $className = "Model\Entities\Sujet";
-        protected $tableName = "sujets";
+        protected $tableName = "sujet";
 
 
         public function __construct(){
@@ -17,8 +17,8 @@
 
         public function findPostByTopic($id){
             $sql = "SELECT *
-                FROM " . $this->tableName . "a
-                WHERE a.id_sujet = :id" ;
+                FROM " . $this->tableName ." a
+                WHERE a.categorie_id = :id" ;
 
             return $this->getMultipleResults(
                 DAO::select($sql, ['id' => $id]),

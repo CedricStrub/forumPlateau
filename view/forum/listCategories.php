@@ -8,8 +8,8 @@ $categories = $result["data"]['categories'];
 
 <?php
 foreach($categories as $categorie ){
-
+    $link = "./index.php?ctrl=forum&action=listSujets&id=" . $categorie->getId();
     ?>
-    <p><?=$categorie->getNom()?></p>
+    <a href=<?=$link?>><?=$categorie->getNom()?></a><br>
     <?php
 }
