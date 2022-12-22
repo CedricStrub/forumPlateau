@@ -1,28 +1,28 @@
 <?php
-    namespace Model\Managers;
-    
-    use App\Manager;
-    use App\DAO;
-    use Model\Managers\MessageManager;
+namespace Model\Managers;
 
-    class MessageManager extends Manager{
+use App\Manager;
+use App\DAO;
+use Model\Managers\MessageManager;
 
-        protected $className = "Model\Entities\Message";
-        protected $tableName = "message";
+class MessageManager extends Manager{
 
-        public function __construct(){
-            parent::connect();
-        }
+    protected $className = "Model\Entities\Message";
+    protected $tableName = "message";
 
-        public function findMsgByPost($id){
-            $sql = "SELECT *
-                FROM " . $this->tableName . " a
-                WHERE a.sujet_id = :id" ;
-
-            return $this->getMultipleResults(
-                DAO::select($sql, ['id' => $id]),
-                $this->className
-            );
-        }
-
+    public function __construct(){
+        parent::connect();
     }
+
+    public function findMsgByPost($id){
+        $sql = "SELECT *
+            FROM " . $this->tableName . " a
+            WHERE a.sujet_id = :id" ;
+
+        return $this->getMultipleResults(
+            DAO::select($sql, ['id' => $id]),
+            $this->className
+        );
+    }
+
+}

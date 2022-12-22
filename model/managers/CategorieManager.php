@@ -1,18 +1,18 @@
 <?php
-    namespace Model\Managers;
-    
-    use App\Manager;
-    use App\DAO;
-    use Model\Managers\CategorieManager;
+namespace Model\Managers;
 
-    class CategorieManager extends Manager{
+use App\Manager;
+use App\DAO;
+use Model\Managers\CategorieManager;
 
-        protected $className = "Model\Entities\Categorie";
-        protected $tableName = "categorie";
+class CategorieManager extends Manager{
+
+    protected $className = "Model\Entities\Categorie";
+    protected $tableName = "categorie";
 
 
-        public function __construct(){
-            parent::connect();
-        }
-
+    public function __construct(){
+        parent::connect();
     }
+
+}
