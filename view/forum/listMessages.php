@@ -1,10 +1,15 @@
 <?php
 
 $messages = $result["data"]['messages'];
-    
+$sujet = $result["data"]["sujet"];
+
+$link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()->getId();
 ?>
 
-<h1>liste Messages</h1>
+<h1>Liste Messages</h1>
+<h2><a href="./index.php?ctrl=forum&action=listCategories">Categorie</a> : 
+    <a href=<?=$link?>><?=$sujet->getCategorie()->getNom()?></a> : <?=$sujet->getTitre()?></h2>
+
 
 <?php
 foreach($messages as $message ){

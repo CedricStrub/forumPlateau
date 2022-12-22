@@ -5,6 +5,7 @@ namespace Controller;
 use App\Session;
 use App\AbstractController;
 use App\ControllerInterface;
+use Model\Entities\Membre;
 use Model\Managers\SujetManager;
 use Model\Managers\CategorieManager;
 use Model\Managers\MessageManager;
@@ -50,7 +51,7 @@ class SecurityController extends AbstractController implements ControllerInterfa
 
         $pseudo = filter_input(INPUT_POST, "pseudo", FILTER_SANITIZE_SPECIAL_CHARS);
         $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
-        var_dump($_POST);
+
         if ($pseudo && $password) {
             $managerMembre = new MembreManager();
 
@@ -58,17 +59,29 @@ class SecurityController extends AbstractController implements ControllerInterfa
 
                 $Session = new Session();
 
-                $user = [
-                    "pseudo" => $pseudo
-                ];
-                //$Session->setUser($user);
+                $data = $managerMembre->findOneByPseudo($pseudo);
+
+                $Session->setUser($data);
                 $this->redirectTo("home");
 
             } else {
                 echo ("Identifiant incorrect !");
             }
-            $this->redirectTo("home");
         }
+    }
+
+    public function profil(){
+
+        return[
+            "view" => VIEW_DIR."security/profil.php",
+            "data" => [
+                "membre" => $_SESSION['user']
+            ]
+        ];
+    }
+
+    public function deconnexion(){
+        unset($_SESSION['user']);
         $this->redirectTo("home");
     }
 

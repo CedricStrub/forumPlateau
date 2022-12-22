@@ -12,7 +12,7 @@
                 $url.= $ctrl ? "/".$ctrl : "";
                 $url.= $action ? "/".$action : "";
                 $url.= $id ? "/".$id : "";
-                $url.= ".html";
+                $url.= ".php";
             }
             else $url = "/ElanF/forumPlateau/index.php";
             header("Location: $url");
