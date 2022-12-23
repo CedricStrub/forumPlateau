@@ -27,7 +27,7 @@ class SecurityController extends AbstractController implements ControllerInterfa
                 "pseudo" => $pseudo,
                 "email" => $email,
                 "password" => $password,
-                "role" => 'membre'
+                "role" => 'MEMBRE'
             ];
 
             $managerMembre = new MembreManager();
@@ -71,11 +71,15 @@ class SecurityController extends AbstractController implements ControllerInterfa
     }
 
     public function profil(){
-
+        $managerSujet = new SujetManager();
+        $managerMessage = new MessageManager();
+        
         return[
             "view" => VIEW_DIR."security/profil.php",
             "data" => [
-                "membre" => $_SESSION['user']
+                "membre" => $_SESSION['user'],
+                "sujet" => $managerSujet->findPostByUser($_SESSION["user"]->getId()),
+                "message" => $managerMessage->findMsgByUser($_SESSION["user"]->getId())
             ]
         ];
     }

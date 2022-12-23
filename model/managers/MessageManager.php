@@ -25,4 +25,15 @@ class MessageManager extends Manager{
         );
     }
 
+    public function findMsgByUser($id){
+        $sql = "SELECT *
+            FROM " . $this->tableName . " a
+            WHERE a.membre_id = :id" ;
+
+        return $this->getMultipleResults(
+            DAO::select($sql, ['id' => $id]),
+            $this->className
+        );
+    }
+
 }
