@@ -12,8 +12,13 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
 
 
 <?php
-foreach($messages as $message ){
-    ?>
-    <p><?=$message->getTexte()?></p>
-    <?php
+if($messages){
+    foreach($messages as $message ){
+        ?>
+        <p><?=$message->getTexte()?></p>
+        <?php
+    }
+
+} else {
+    echo "Pas de messages";
 }

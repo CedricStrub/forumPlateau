@@ -4,58 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>FORUM</title>
 </head>
 <body>
     <div id="wrapper"> 
     
         <div id="mainpage">
-            <!-- c'est ici que les messages (erreur ou succès) s'affichent-->
-            <h3 class="message" style="color: red"><?= App\Session::getFlash("error") ?></h3>
-            <h3 class="message" style="color: green"><?= App\Session::getFlash("success") ?></h3>
             <header>
-                <nav>
-                    <div id="nav-left">
-                        <a href="/ElanF/forumPlateau/">Accueil</a>
-                        <?php
-                        if(App\Session::isAdmin()){
-                            ?>
-                            <a href="index.php?ctrl=home&action=users">Voir la liste des gens</a>
-                        
-                            <?php
-                        }
-                        ?>
-                    </div>
-                    <div id="nav-right">
-                    <?php
-                        
-                        if(App\Session::getUser()){
-                            ?>
-                            <a href="index.php?ctrl=security&action=profil"><span class="fas fa-user"></span>&nbsp;<?= App\Session::getUser()->getPseudo()?></a>
-                            <a href="index.php?ctrl=security&action=deconnexion">Déconnexion</a>
-                            <a href="index.php?ctrl=forum&action=listCategories">la liste des categories</a>
-                            <?php
-                        }
-                        else{
-                            ?>
-                            <a href="./view/security/login.php">Connexion</a>
-                            <a href="./view/security/register.php">Inscription</a>
-                            <a href="index.php?ctrl=forum&action=listCategories">la liste des categories</a>
-                        <?php
-                        }
+                <div class="topnav">
+                <div class="titre"><span>Forum</span>
+                    <a href="/CedricStrub/ElanF/forumPlateau/">Accueil</a>
                     
+                    <?php
+                    if(App\Session::getUser()){
+                        ?>
+                        <a class="split" href="index.php?ctrl=security&action=profil">&nbsp;<?= App\Session::getUser()->getPseudo()?></a>
+                        <a class="split" href="index.php?ctrl=security&action=deconnexion">Déconnexion</a>
+                    <?php
+                    }
+                    else{
+                        ?>
+                        <a class="split" href="./view/security/register.php">Inscription</a>
+                        <a class="split" href="./view/security/login.php">Connexion</a>
+                    <?php
+                    }
                     ?>
                     </div>
-                </nav>
-            </header>
+                </div>
+                </header>
+                <!-- c'est ici que les messages (erreur ou succès) s'affichent-->
+                <h3 class="message" style="color: red"><?= App\Session::getFlash("error") ?></h3>
+                <h3 class="message" style="color: green"><?= App\Session::getFlash("success") ?></h3>
+                <?php
+                    if(App\Session::isAdmin()){
+                        ?>
+                        <a class="btn" href="index.php?ctrl=home&action=users">Voir la liste des gens</a>
+                    
+                        <?php
+                    }
+                    ?>
+                <a class="btn" href="index.php?ctrl=forum&action=listCategories">la liste des categories</a>
             
             <main id="forum">
                 <?= $page ?>
             </main>
         </div>
         <footer>
-            <p>&copy; 2022/23 - Forum CDA - <a href="/home/forumRules.html">Règlement du forum</a> - <a href="">Mentions légales</a></p>
+            <p>&copy; 2022/23 - Forum CDA - <a class="btn" href="/home/forumRules.html">Règlement du forum</a> - <a class="btn" href="">Mentions légales</a></p>
             <!--<button id="ajaxbtn">Surprise en Ajax !</button> -> cliqué <span id="nbajax">0</span> fois-->
         </footer>
     </div>

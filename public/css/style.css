@@ -1,0 +1,65 @@
+<link rel="stylesheet" href="./public/css/style.css">
+
+:root{
+  --txt: rgb(0, 0, 0);
+  --pri: rgb(37, 40, 50);
+  --sec: rgb(101, 115, 141);
+  --ter: rgb(164, 160, 189);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background: var(--pri);
+}
+
+
+.topnav {
+  background-color: var(--pri);
+  overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  color: var(--txt);
+  text-align: center;
+  background-color: var(--sec);
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 24px;
+  border: 1px solid;
+  border-color: var(--ter);
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: var(--ter);
+}
+
+/* Create a right-aligned (split) link inside the navigation bar */
+.topnav a.split {
+  float: right;
+  color: var(--pri);
+}
+
+.topnav .titre {
+  align-items: center;
+  color: var(--ter);
+  font-size: 49px;
+  text-align: center;
+  border: 1px solid;
+  border-color: var(--ter);
+}
+
+a.btn {
+  color: var(--txt);
+  text-align: center;
+  background-color: var(--sec);
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 24px;
+  border: 1px solid;
+  border-color: var(--ter);
+}
