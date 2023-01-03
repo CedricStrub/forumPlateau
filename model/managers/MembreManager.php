@@ -40,15 +40,7 @@ class MembreManager extends Manager{
         );
 
     }
-/*
-    public function register($data){
 
-        $sql = "INSERT INTO " . $this->tableName . "
-                VALUES (0, :pseudo, :email, :password, 'membre', '')";
-
-        return $this->add($data);
-
-    }
-*/
+    
 
 }
