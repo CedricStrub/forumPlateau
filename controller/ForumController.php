@@ -57,4 +57,10 @@ class ForumController extends AbstractController implements ControllerInterface{
 
     }
 
+    public function newSujet(){
+        return [
+            "view" => VIEW_DIR."forum/newSujet.php"
+        ];
+    }
+
 }

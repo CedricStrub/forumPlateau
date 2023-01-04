@@ -1,6 +1,6 @@
 <h1>Connexion</h1>
 
-<form action="../../index.php?ctrl=security&action=connexion" method="post">
+<form action="index.php?ctrl=security&action=submit" method="post">
 <table>
     <tbody>
         <tr>

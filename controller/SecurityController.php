@@ -47,7 +47,7 @@ class SecurityController extends AbstractController implements ControllerInterfa
 
     }
 
-    public function connexion(){
+    public function submit(){
 
         $pseudo = filter_input(INPUT_POST, "pseudo", FILTER_SANITIZE_SPECIAL_CHARS);
         $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
@@ -81,6 +81,12 @@ class SecurityController extends AbstractController implements ControllerInterfa
                 "sujet" => $managerSujet->findPostByUser($_SESSION["user"]->getId()),
                 "message" => $managerMessage->findMsgByUser($_SESSION["user"]->getId())
             ]
+        ];
+    }
+
+    public function connexion(){
+        return [
+            "view" => VIEW_DIR."security/login.php"
         ];
     }
 

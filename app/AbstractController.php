@@ -8,13 +8,13 @@
         public function redirectTo($ctrl = null, $action = null, $id = null){
 
             if($ctrl != "home"){
-                $url = "/ElanF/forumPlateau/view";
+                $url = "/CedricStrub/forumPlateau/view";
                 $url.= $ctrl ? "/".$ctrl : "";
                 $url.= $action ? "/".$action : "";
                 $url.= $id ? "/".$id : "";
                 $url.= ".php";
             }
-            else $url = "/ElanF/forumPlateau/index.php";
+            else $url = "/CedricStrub/forumPlateau/index.php";
             header("Location: $url");
             die();
 

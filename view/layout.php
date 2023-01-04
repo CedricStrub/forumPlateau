@@ -13,7 +13,7 @@
             <header>
                 <div class="topnav">
                 <div class="titre"><span>Forum</span>
-                    <a href="/CedricStrub/ElanF/forumPlateau/">Accueil</a>
+                    <a href="/CedricStrub/forumPlateau/">Accueil</a>
                     
                     <?php
                     if(App\Session::getUser()){
@@ -25,7 +25,7 @@
                     else{
                         ?>
                         <a class="split" href="./view/security/register.php">Inscription</a>
-                        <a class="split" href="./view/security/login.php">Connexion</a>
+                        <a class="split" href="index.php?ctrl=security&action=connexion">Connexion</a>
                     <?php
                     }
                     ?>
