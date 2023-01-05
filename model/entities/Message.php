@@ -8,6 +8,9 @@ final class Message extends Entity{
     private $id;
     private $texte;
     private $dateCreation;
+    private $membre;
+    private $sujet;
+
 
     public function __construct($data){         
         $this->hydrate($data);        
@@ -48,6 +51,29 @@ final class Message extends Entity{
         return $this;
     }
 
+    public function getMembre()
+    {
+        return $this->membre;
+    }
+
+    public function setMembre($membre)
+    {
+        $this->membre = $membre;
+
+        return $this;
+    }
+
+    public function getSujet()
+    {
+        return $this->sujet;
+    }
+
+    public function setSujet($sujet)
+    {
+        $this->sujet = $sujet;
+
+        return $this;
+    }
 
 
 }

@@ -1,7 +1,7 @@
 
 <h1>Inscription</h1>
 
-<form action="../index.php?ctrl=security&action=inscription" method="post">
+<form action="index.php?ctrl=security&action=register" method="post">
 <table>
     <tbody>
         <tr>

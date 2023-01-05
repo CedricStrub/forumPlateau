@@ -37,4 +37,26 @@ class SujetManager extends Manager{
         );
     }
 
+    public function lock($id){
+        $sql = "UPDATE sujet
+            SET verrouillage = 1
+            WHERE id_sujet = :id";
+        DAO::update($sql,["id" => $id]);
+    }
+
+    public function unlock($id){
+        $sql = "UPDATE sujet
+            SET verrouillage = 0
+            WHERE id_sujet = :id";
+        DAO::update($sql,["id" => $id]);
+    }
+
+    public function deleteFrom($id){
+        $sql = "DELETE FROM message
+                WHERE sujet_id = :id
+                ";
+
+        return DAO::delete($sql, ['id' => $id]); 
+    }
+
 }

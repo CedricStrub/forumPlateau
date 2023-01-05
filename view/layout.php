@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./public/css/template.css">
     <title>FORUM</title>
 </head>
 <body>
@@ -24,7 +25,7 @@
                     }
                     else{
                         ?>
-                        <a class="split" href="./view/security/register.php">Inscription</a>
+                        <a class="split" href="index.php?ctrl=security&action=inscription">Inscription</a>
                         <a class="split" href="index.php?ctrl=security&action=connexion">Connexion</a>
                     <?php
                     }
@@ -35,6 +36,7 @@
                 <!-- c'est ici que les messages (erreur ou succès) s'affichent-->
                 <h3 class="message" style="color: red"><?= App\Session::getFlash("error") ?></h3>
                 <h3 class="message" style="color: green"><?= App\Session::getFlash("success") ?></h3>
+                <div class="divv">
                 <?php
                     if(App\Session::isAdmin()){
                         ?>
@@ -44,7 +46,7 @@
                     }
                     ?>
                 <a class="btn" href="index.php?ctrl=forum&action=listCategories">la liste des categories</a>
-            
+                </div>
             <main id="forum">
                 <?= $page ?>
             </main>

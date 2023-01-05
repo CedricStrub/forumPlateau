@@ -7,18 +7,26 @@ $messages = $result['data']['message'];
 
 <h2>Derniers sujet crée :</h2>
 <?php
-foreach($sujets as $sujet ){
-    ?>
-    <p><?=$sujet->getTitre()?></p>
+if ($sujets) {
+    foreach ($sujets as $sujet) {
+        ?>
+    <p><?= $sujet->getTitre() ?></p>
     <?php
+    }
+}else{
+    echo "Vous n'avez crée aucun sujet";
 }
 ?>
 
 
 <h2>Derniers messages publié :</h2>
 <?php
-foreach($messages as $message ){
-    ?>
-    <p><?=$message->getTexte()?></p>
-    <?php
+if($messages){
+    foreach($messages as $message ){
+        ?>
+        <p><?=$message->getTexte()?></p>
+        <?php
+    }
+}else{
+    echo "Vous n'avez pulié aucun message";
 }

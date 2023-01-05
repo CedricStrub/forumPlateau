@@ -6,13 +6,11 @@
         public function index(){}
         
         public function redirectTo($ctrl = null, $action = null, $id = null){
-
             if($ctrl != "home"){
-                $url = "/CedricStrub/forumPlateau/view";
-                $url.= $ctrl ? "/".$ctrl : "";
-                $url.= $action ? "/".$action : "";
-                $url.= $id ? "/".$id : "";
-                $url.= ".php";
+                $url = "/CedricStrub/forumPlateau/index.php?";
+                $url.= $ctrl ? "ctrl=".$ctrl : "";
+                $url.= $action ? "&action=".$action : "";
+                $url.= $id ? "&id=".$id : "";
             }
             else $url = "/CedricStrub/forumPlateau/index.php";
             header("Location: $url");

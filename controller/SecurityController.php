@@ -13,7 +13,7 @@ use Model\Managers\MembreManager;
 
 class SecurityController extends AbstractController implements ControllerInterface{
 
-    public function inscription(){
+    public function register(){
 
         $pseudo = filter_input(INPUT_POST, "pseudo", FILTER_SANITIZE_SPECIAL_CHARS);
         $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
@@ -35,7 +35,9 @@ class SecurityController extends AbstractController implements ControllerInterfa
             if($managerMembre->findOneByEmail($user['email']) == NULL && $managerMembre->findOneByPseudo($user['pseudo']) == NULL){
 
                 $managerMembre->add($user);
-                $this->redirectTo("security", "login");
+                return [
+                    "view" => VIEW_DIR."security/login.php"
+                ];
 
             }else{
                 echo("Cette adresse e-mail et/ou pseudo est déjà utilisé !");
@@ -47,7 +49,7 @@ class SecurityController extends AbstractController implements ControllerInterfa
 
     }
 
-    public function submit(){
+    public function login(){
 
         $pseudo = filter_input(INPUT_POST, "pseudo", FILTER_SANITIZE_SPECIAL_CHARS);
         $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
@@ -87,6 +89,12 @@ class SecurityController extends AbstractController implements ControllerInterfa
     public function connexion(){
         return [
             "view" => VIEW_DIR."security/login.php"
+        ];
+    }
+
+    public function inscription(){
+        return [
+            "view" => VIEW_DIR."security/register.php"
         ];
     }
 
