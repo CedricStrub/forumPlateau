@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="./public/css/template.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dosis&display=swap" rel="stylesheet"> 
     <title>FORUM</title>
 </head>
 <body>
@@ -14,19 +17,19 @@
             <header>
                 <div class="topnav">
                 <div class="titre"><span>Forum</span>
-                    <a href="/CedricStrub/forumPlateau/">Accueil</a>
+                    <a class="btn" href="/CedricStrub/forumPlateau/">Accueil</a>
                     
                     <?php
                     if(App\Session::getUser()){
                         ?>
-                        <a class="split" href="index.php?ctrl=security&action=profil">&nbsp;<?= App\Session::getUser()->getPseudo()?></a>
-                        <a class="split" href="index.php?ctrl=security&action=deconnexion">Déconnexion</a>
+                        <a class="split btn" href="index.php?ctrl=security&action=profil">&nbsp;<?= App\Session::getUser()->getPseudo()?></a>
+                        <a class="split btn" href="index.php?ctrl=security&action=deconnexion">Déconnexion</a>
                     <?php
                     }
                     else{
                         ?>
-                        <a class="split" href="index.php?ctrl=security&action=inscription">Inscription</a>
-                        <a class="split" href="index.php?ctrl=security&action=connexion">Connexion</a>
+                        <a class="split btn" href="index.php?ctrl=security&action=inscription">Inscription</a>
+                        <a class="split btn" href="index.php?ctrl=security&action=connexion">Connexion</a>
                     <?php
                     }
                     ?>
@@ -36,24 +39,17 @@
                 <!-- c'est ici que les messages (erreur ou succès) s'affichent-->
                 <h3 class="message" style="color: red"><?= App\Session::getFlash("error") ?></h3>
                 <h3 class="message" style="color: green"><?= App\Session::getFlash("success") ?></h3>
-                <div class="divv">
-                <?php
-                    if(App\Session::isAdmin()){
-                        ?>
-                        <a class="btn" href="index.php?ctrl=home&action=users">Voir la liste des gens</a>
-                    
-                        <?php
-                    }
-                    ?>
-                <a class="btn" href="index.php?ctrl=forum&action=listCategories">la liste des categories</a>
-                </div>
             <main id="forum">
                 <?= $page ?>
             </main>
         </div>
         <footer>
-            <p>&copy; 2022/23 - Forum CDA - <a class="btn" href="/home/forumRules.html">Règlement du forum</a> - <a class="btn" href="">Mentions légales</a></p>
-            <!--<button id="ajaxbtn">Surprise en Ajax !</button> -> cliqué <span id="nbajax">0</span> fois-->
+            <div class="botnav">
+                <span>2022/23 - Forum CDA</span>
+                <a class="btn" href="/home/forumRules.html">Règlement du forum</a>
+                <a class="btn" href="">Mentions légales</a>
+                <!--<button id="ajaxbtn">Surprise en Ajax !</button> -> cliqué <span id="nbajax">0</span> fois-->
+            </div>
         </footer>
     </div>
     <script
