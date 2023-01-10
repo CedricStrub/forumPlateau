@@ -17,7 +17,7 @@
             <header>
                 <div class="topnav">
                 <div class="titre"><span>Forum</span>
-                    <a class="btn" href="/CedricStrub/forumPlateau/">Accueil</a>
+                    <a class="btn" href="/CedricStrub/forumPlateau/index.php">Accueil</a>
                     
                     <?php
                     if(App\Session::getUser()){

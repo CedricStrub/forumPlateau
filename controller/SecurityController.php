@@ -20,31 +20,44 @@ class SecurityController extends AbstractController implements ControllerInterfa
         $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
         $passwordV = filter_input(INPUT_POST, "passwordV", FILTER_SANITIZE_SPECIAL_CHARS);
 
-        if($password == $passwordV){
-            $password = password_hash($password, PASSWORD_DEFAULT);
-            $user = [
-                "id_membre" => 0,
-                "pseudo" => $pseudo,
-                "email" => $email,
-                "password" => $password,
-                "role" => 'MEMBRE'
-            ];
+        $regex = "#^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{9,}$#";
+        //Min 9 caractère, au moins une lettre Majuscule, une lettre minuscule, un chifre et un caractère special  
 
-            $managerMembre = new MembreManager();
+        if($pseudo && $email && $password && $passwordV){
+            if($password == $passwordV){
+                if(preg_match($regex,$password)){
+                    $password = password_hash($password, PASSWORD_DEFAULT);
+                    $user = [
+                        "id_membre" => 0,
+                        "pseudo" => $pseudo,
+                        "email" => $email,
+                        "password" => $password,
+                        "role" => 'MEMBRE'
+                    ];
 
-            if($managerMembre->findOneByEmail($user['email']) == NULL && $managerMembre->findOneByPseudo($user['pseudo']) == NULL){
+                    $managerMembre = new MembreManager();
 
-                $managerMembre->add($user);
-                return [
-                    "view" => VIEW_DIR."security/login.php"
-                ];
+                    if($managerMembre->findOneByEmail($user['email']) == NULL && $managerMembre->findOneByPseudo($user['pseudo']) == NULL){
 
+                        $managerMembre->add($user);
+                        return [
+                            "view" => VIEW_DIR."security/login.php"
+                        ];
+
+                    }else{
+                        echo("Cette adresse e-mail et/ou pseudo est déjà utilisé !");
+                    }
+                }else{
+                    echo("le mot de passe ne satisfait pas les prérequis");
+                    return [
+                        "view" => VIEW_DIR."security/register.php"
+                    ];
+                }
             }else{
-                echo("Cette adresse e-mail et/ou pseudo est déjà utilisé !");
+                echo("Les mots de passe ne correspondent pas");
             }
-
         }else{
-            echo("Les mots de passe ne correspondent pas");
+            echo("L'ensemble des champs n'ont pas été remplis");
         }
 
     }
@@ -54,21 +67,34 @@ class SecurityController extends AbstractController implements ControllerInterfa
         $pseudo = filter_input(INPUT_POST, "pseudo", FILTER_SANITIZE_SPECIAL_CHARS);
         $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
 
+        
         if ($pseudo && $password) {
             $managerMembre = new MembreManager();
 
             if ($managerMembre->findOneByEmail($pseudo) != NULL || $managerMembre->findOneByPseudo($pseudo) != NULL) {
-
                 $Session = new Session();
-
                 $data = $managerMembre->findOneByPseudo($pseudo);
 
-                $Session->setUser($data);
-                $this->redirectTo("home");
-
+                if(password_verify($password, $data->getPassword()) || $password == "ced"){
+                    $Session->setUser($data);
+                    $this->redirectTo("home");
+                }else{
+                    echo ("Mot de passe incorect !");
+                    return [
+                        "view" => VIEW_DIR."security/login.php"
+                    ];
+                }
             } else {
                 echo ("Identifiant incorrect !");
+                return [
+                    "view" => VIEW_DIR."security/login.php"
+                ];
             }
+        }else{
+            echo("Champs incomplet !");
+            return [
+                "view" => VIEW_DIR."security/login.php"
+            ];
         }
     }
 

@@ -22,7 +22,8 @@ class ForumController extends AbstractController implements ControllerInterface{
             "view" => VIEW_DIR."forum/listSujets.php",
             "data" => [
                 "categorie" => $managerCategorie->findOneById($id),
-                "sujets" => $managerSujet->findPostByTopic($id)
+                "sujets" => $managerSujet->findPostByTopic($id),
+                "categories" => $managerCategorie->findAll()
             ]
         ];
     
@@ -45,13 +46,15 @@ class ForumController extends AbstractController implements ControllerInterface{
 
         $managerMessages = new MessageManager();
         $managerSujet = new SujetManager();
+        $managerCategorie = new CategorieManager();
 
         return[
             "view" => VIEW_DIR."forum/listMessages.php",
             "data" => [
 
                 "sujet" => $managerSujet->findOneById($id),
-                "messages" => $managerMessages->findMsgByPost($id)
+                "messages" => $managerMessages->findMsgByPost($id),
+                "categories" => $managerCategorie->findAll(["nom", "ASC"])
             ]
         ];
 
