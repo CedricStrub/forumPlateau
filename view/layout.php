@@ -11,9 +11,7 @@
     <title>FORUM</title>
 </head>
 <body>
-    <div id="wrapper"> 
-    
-        <div id="mainpage">
+
             <header>
                 <div class="topnav">
                 <div class="titre"><span>Forum</span>
@@ -44,14 +42,26 @@
             </main>
         </div>
         <footer>
-            <div class="botnav">
+            <div class="botnav" id="botnav">
                 <span>2022/23 - Forum CDA</span>
                 <a class="btn" href="/home/forumRules.html">Règlement du forum</a>
                 <a class="btn" href="">Mentions légales</a>
                 <!--<button id="ajaxbtn">Surprise en Ajax !</button> -> cliqué <span id="nbajax">0</span> fois-->
             </div>
         </footer>
-    </div>
+        <script>
+            var prevScrollpos = window.pageYOffset;
+            window.onscroll = function() {
+                var currentScrollPos = window.pageYOffset;
+                if (prevScrollpos > currentScrollPos) {
+                    document.getElementById("botnav").style.bottom = "0";
+                } else {
+                    document.getElementById("botnav").style.bottom = "-100px";
+                }
+                prevScrollpos = currentScrollPos;
+            }
+        </script>
+
     <script
         src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="

@@ -70,43 +70,92 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
     </div>
     <div class="center">
     <div class="C_content  ext_cat">
-    <h1>Liste Messages : <?=$sujet->getTitre()?></h1>
+    <table> 
+    <tr>
+    
+    <h1>Liste Messages : <?=$sujet->getTitre()?> </h1>
     <?php
     if(App\Session::getUser()){
         if (App\Session::getUser()->getId() == $sujet->getMembre()->getId()) {
             if($sujet->getVerrouillage() == 0){
                 ?>
-                <a class="lien" href="./index.php?ctrl=forum&action=verrouiller&id=<?=$sujet->getId()?>">🔓</a>
-                <a class="lien" href="./index.php?ctrl=forum&action=supprimerSujet&id=<?=$sujet->getId()?>">🗑</a>
+                <td> <div class="sw1"></div> </td>
+                <td><a class="lien" href="./index.php?ctrl=forum&action=editerSujet&id=<?=$sujet->getId()?>"> 🖉</a></td>
+                <td><a class="lien" href="./index.php?ctrl=forum&action=verrouiller&id=<?=$sujet->getId()?>"> 🔓</a></td>
+                <td><a class="lien" href="./index.php?ctrl=forum&action=supprimerSujet&id=<?=$sujet->getId()?>"> 🗑</a></td>
                 <?php
             }else{
                 ?>
-                <a class="lien" href="./index.php?ctrl=forum&action=deverrouiller&id=<?=$sujet->getId()?>">🔒</a>
-                <a class="lien" href="./index.php?ctrl=forum&action=supprimerSujet&id=<?=$sujet->getId()?>">🗑</a>
+                <td> <div class="sw1"></div> </td>
+                <td><a class="lien" href="./index.php?ctrl=forum&action=editerSujet&id=<?=$sujet->getId()?>"> 🖉</a></td>
+                <td><a class="lien" href="./index.php?ctrl=forum&action=deverrouiller&id=<?=$sujet->getId()?>"> 🔒</a></td>
+                <td><a class="lien" href="./index.php?ctrl=forum&action=supprimerSujet&id=<?=$sujet->getId()?>"> 🗑</a></td>
                 <?php
             }
         }
     }
     ?>
+    </tr>
+    </table>
     </div>
     <?php
     if($messages){
         foreach($messages as $message ){
-            ?>
-            <p><?=$message->getTexte()?></p>
-            <?php
-            if (App\Session::isAdmin()) {
-                ?>
-                <a href="./index.php?ctrl=forum&action=supprimerMessage&id=<?= $message->getId() ?>">Supprimer</a>
-            <?php
-            }
-            elseif(isset($_SESSION["user"])){
-                if($message->getMembre()->getId() == $_SESSION["user"]->getId()){
+            if(isset($_SESSION["user"])){
+                if($message->getMembre()->getId() == $_SESSION["user"]->getId() && $message->getMembre()->getId() == $sujet->getMembre()->getId()){
                     ?>
-                    <a href="./index.php?ctrl=forum&action=supprimerMessage&id=<?= $message->getId() ?>">Supprimer</a>
+                        <div class="msgl">
+                            <?=$message->getMembre()->getPseudo()?> le : 
+                            <?=$message->getDateCreation()?>
+                            <a class="lien" href="./index.php?ctrl=forum&action=supprimerMessage&id=<?= $message->getId() ?>">🗑</a>
+                        </div>
+                        <div class="msgL"><?=$message->getTexte()?>
                     <?php
+                }elseif(App\Session::isAdmin()) {
+                    ?>
+                        <div class="msgr">
+                            <?=$message->getMembre()->getPseudo()?> le : 
+                            <?=$message->getDateCreation()?>
+                            <a class="lien" href="./index.php?ctrl=forum&action=supprimerMessage&id=<?= $message->getId() ?>">🗑</a>
+                        </div>
+                        <div class="msgR"><?=$message->getTexte()?>
+                    <?php
+                }else{
+                    if($message->getMembre()->getId() == $sujet->getMembre()->getId()){
+                        ?>
+                        <div class="msgl">
+                            <?=$message->getMembre()->getPseudo()?> le : 
+                            <?=$message->getDateCreation()?>
+                        </div>
+                        <div class="msgL"><?=$message->getTexte()?>
+                        <?php
+                    }else{
+                        if($message->getMembre()->getId() == $_SESSION["user"]->getId()){
+                            ?>
+                            <div class="msgr">
+                                <?=$message->getMembre()->getPseudo()?> le : 
+                                <?=$message->getDateCreation()?>
+                                <a class="lien" href="./index.php?ctrl=forum&action=supprimerMessage&id=<?= $message->getId() ?>">🗑</a>
+                            </div>
+                            <div class="msgR">
+                            <textarea name="text" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'><?=$message->getTexte()?></textarea>
+                            
+                            <?php
+                        }else{
+                            ?>
+                            <div class="msgr">
+                                <?=$message->getMembre()->getPseudo()?> le : 
+                                <?=$message->getDateCreation()?>
+                            </div>
+                            <div class="msgR"><?=$message->getTexte()?>
+                            <?php
+                        }
+                    }
                 }
             }
+            ?>
+            </div>
+            <?php
         }
 
     } else {
@@ -122,10 +171,10 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
         <input type = "hidden" name = "sujet" value = <?= $sujet->getId() ?> />
             <tbody>
                 <tr>
-                    <td><span>Message</span></td>
+                    <td><span class="f_titre">Message</span></td>
                 </tr>
                 <tr>
-                    <td><input type="textarea" id="message" name="message" placeholder="message"></td>
+                    <td><textarea id="message" name="message" row="10" cols="100" placeholder="message"></textarea></td>
                 </tr>
                 <tr>
                     <td><input class="nav_btn" type="submit" value="Submit"></td>
