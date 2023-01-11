@@ -69,7 +69,7 @@ class ForumController extends AbstractController implements ControllerInterface{
             $managerMessages = new MessageManager();
             $managerSujet = new SujetManager();
 
-            $userId = $_SESSION["user"]->getId();
+            $userId = $_SESSION["user"]->getId(); 
             $data = [
                 "titre" => $titre,
                 "membre_id" => $userId,
@@ -161,5 +161,19 @@ class ForumController extends AbstractController implements ControllerInterface{
         $managerCategorie->delete($id);
         $this->redirectTo("forum", "listCategories");
     }
+
+    public function editerMessage(){
+        $txt = filter_input(INPUT_POST, "texte", FILTER_SANITIZE_SPECIAL_CHARS);
+        $id = filter_input(INPUT_POST, "msg", FILTER_SANITIZE_NUMBER_INT);
+
+        if($txt && $id){
+            $managerMessage = new MessageManager();
+
+            $msg = $managerMessage->findOneById($id);
+            $msg->editer($txt,$id);
+        }else{
+            echo("Le texte ne peut pas être vide !"); 
+        }
+    }   
 
 }

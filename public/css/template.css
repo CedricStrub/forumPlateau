@@ -258,13 +258,68 @@ input{
   width: 20px;
 }
 
-textarea {
-  color: var(--ter);
-  width: 90%;
+.textarea {
+  border: 1px solid #ccc;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 1px 6px;
+  background: transparent;
 }
+.width-machine {
+  /*   Sort of a magic number to add extra space for number spinner */
+  padding: 0 1rem;
+}
+
+.textarea {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  resize: both;
+  min-height: 40px;
+  line-height: 20px;
+  background: transparent;
+}
+
+.textarea[contenteditable]:empty::before {
+  content: "Placeholder still possible";
+  color: gray;
+}
+
 
 #message {
   resize: none;
   height: 200px;
   color: var(--ter);
+}
+
+.limit_btn {
+  max-width: 200px;
+}
+
+.edit_btn {
+  color: var(--txt);
+  text-align: center;
+  background-color: var(--sec);
+  text-decoration: none;
+  font-size: 24px;
+  overflow: hidden;
+  border: 1px solid;
+  border-color: var(--ter);
+  overflow: hidden;
+  padding: 5px;
+}
+
+.edit_btn:hover{
+  background: var(--ter);
+  cursor: pointer;
+}
+
+.edit_btn{
+  color: var(--txt);
+  text-align: center;
+  background-color: var(--sec);
+  text-decoration: none;
+  overflow: hidden;
+  width: 100%;
+  max-width: 200px;
 }

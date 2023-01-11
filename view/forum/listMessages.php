@@ -138,11 +138,12 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
                                 <a class="lien" href="./index.php?ctrl=forum&action=supprimerMessage&id=<?= $message->getId() ?>">🗑</a>
                             </div>
                             <div class="msgR">
-                            <textarea name="text" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'><?=$message->getTexte()?></textarea>
-                            
+                                <span id="txt_edit" class="textarea" role="textbox" contenteditable><?=$message->getTexte()?></span>
+                                <button id="editer" class="edit_btn" type="button" onclick="edition(<?= $message->getId() ?>)">Envoyer</button>
                             <?php
                         }else{
                             ?>
+                            
                             <div class="msgr">
                                 <?=$message->getMembre()->getPseudo()?> le : 
                                 <?=$message->getDateCreation()?>
@@ -151,6 +152,24 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
                             <?php
                         }
                     }
+                }
+            }else{
+                if($message->getMembre()->getId() == $sujet->getMembre()->getId()){
+                    ?>
+                    <div class="msgl">
+                        <?=$message->getMembre()->getPseudo()?> le : 
+                        <?=$message->getDateCreation()?>
+                    </div>
+                    <div class="msgL"><?=$message->getTexte()?>
+                    <?php
+                }else{
+                    ?>
+                    <div class="msgr">
+                        <?=$message->getMembre()->getPseudo()?> le : 
+                        <?=$message->getDateCreation()?>
+                    </div>
+                    <div class="msgR"><?=$message->getTexte()?>
+                    <?php
                 }
             }
             ?>
@@ -161,7 +180,20 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
     } else {
         echo "Pas de messages";
     }
-
+    ?>
+    <script>
+        function edition(id){
+        txt = document.getElementById("txt_edit").innerHTML;
+        const url = "index.php?ctrl=forum&action=editerMessage";
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", url, false);
+        data = {texte : txt, msg : id};
+        document.getElementById("editer").addEventListener("click",
+            function() {xhr.send(data)},
+            false
+        );}
+    </script>
+    <?php
     if(App\Session::getUser()){
         if ($sujet->getVerrouillage() == 0) {
             ?>
@@ -177,7 +209,7 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
                     <td><textarea id="message" name="message" row="10" cols="100" placeholder="message"></textarea></td>
                 </tr>
                 <tr>
-                    <td><input class="nav_btn" type="submit" value="Submit"></td>
+                    <td><input class="nav_btn limit_btn" type="submit" value="Submit"></td>
                 </tr>
             </tbody>
         </table>

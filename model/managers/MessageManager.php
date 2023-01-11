@@ -36,4 +36,11 @@ class MessageManager extends Manager{
         );
     }
 
+    public function editer($txt,$id){
+        $sql = "UPDATE message
+            SET texte = :txt
+            WHERE id_message = :id";
+        DAO::update($sql,["id" => $id,"txt" => $txt]);
+    }
+
 }
