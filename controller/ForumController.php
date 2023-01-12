@@ -67,12 +67,34 @@ class ForumController extends AbstractController implements ControllerInterface{
         $managerSujet = new SujetManager();
         $managerCategorie = new CategorieManager();
 
+        $sujet = $managerMessages->findOneById($id)->getSujet()->getId();
+
+        return[
+            "view" => VIEW_DIR."forum/listMessages.php",
+            "data" => [
+                "edit" => $id,
+                "sujet" => $managerSujet->findOneById($sujet),
+                "messages" => $managerMessages->findMsgByPost($sujet),
+                "categories" => $managerCategorie->findAll(["nom", "ASC"])
+            ]
+        ];
+
+    }
+
+    public function editView($id){
+
+        $managerMessages = new MessageManager();
+        $managerSujet = new SujetManager();
+        $managerCategorie = new CategorieManager();
+
+        $sujet = $managerMessages->findOneById($id)->getSujet()->getId();
+
         return[
             "view" => VIEW_DIR."forum/editMessages.php",
             "data" => [
-
-                "sujet" => $managerSujet->findOneById($id),
-                "messages" => $managerMessages->findMsgByPost($id),
+                "edit" => $id,
+                "sujet" => $managerSujet->findOneById($sujet),
+                "messages" => $managerMessages->findMsgByPost($sujet),
                 "categories" => $managerCategorie->findAll(["nom", "ASC"])
             ]
         ];
@@ -188,15 +210,14 @@ class ForumController extends AbstractController implements ControllerInterface{
         $managerMessage = new MessageManager();
 
         if($txt && $id){
-            $managerMessage->findOneById($id);
             $managerMessage->editer($txt,$id);
 
         }else{
             echo("Le texte ne peut pas être vide !"); 
         }
+        
+        $this->redirectTo("forum", "editMessages", $id);
+    } 
 
-        $sujet = $managerMessage->findOneById($id)->getSujet()->getId();
-        $this->redirectTo("forum", "listMessages", $sujet);
-    }   
 
 }

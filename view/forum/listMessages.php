@@ -108,20 +108,32 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
                             <?=$message->getMembre()->getPseudo()?> le : 
                             <?=$message->getDateCreation()?>
                             <a class="lien" href="./index.php?ctrl=forum&action=supprimerMessage&id=<?= $message->getId() ?>">🗑</a>
-                            <a class="lien" href="./index.php?ctrl=forum&action=editMessages&id=<?=$sujet->getId()?>">🖉</a>
+                            <a class="lien" href="./index.php?ctrl=forum&action=editView&id=<?=$message->getId()?>">🖉</a>
                         </div>
                         <div class="msgL"><?=$message->getTexte()?>
                     <?php
                 }elseif(App\Session::isAdmin()) {
-                    ?>
+                    if($message->getMembre()->getId() == $_SESSION["user"]->getId()){
+                        ?>
                         <div class="msgr">
                             <?=$message->getMembre()->getPseudo()?> le : 
                             <?=$message->getDateCreation()?>
                             <a class="lien" href="./index.php?ctrl=forum&action=supprimerMessage&id=<?= $message->getId() ?>">🗑</a>
-                            <a class="lien" href="./index.php?ctrl=forum&action=editMessages&id=<?=$sujet->getId()?>">🖉</a>
+                            <a class="lien" href="./index.php?ctrl=forum&action=editView&id=<?=$message->getId()?>">🖉</a>
                         </div>
                         <div class="msgR"><?=$message->getTexte()?>
-                    <?php
+                        <?php
+                    }else{
+                        ?>
+                        <div class="msgr">
+                            <?=$message->getMembre()->getPseudo()?> le : 
+                            <?=$message->getDateCreation()?>
+                            <a class="lien" href="./index.php?ctrl=forum&action=supprimerMessage&id=<?= $message->getId() ?>">🗑</a>
+                            <a class="lien" href="./index.php?ctrl=forum&action=editView&id=<?=$message->getId()?>">🖉</a>
+                        </div>
+                        <div class="msgR"><?=$message->getTexte()?>
+                        <?php
+                    }
                 }else{
                     if($message->getMembre()->getId() == $sujet->getMembre()->getId()){
                         ?>
@@ -138,7 +150,7 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
                                 <?=$message->getMembre()->getPseudo()?> le : 
                                 <?=$message->getDateCreation()?>
                                 <a class="lien" href="./index.php?ctrl=forum&action=supprimerMessage&id=<?= $message->getId() ?>">🗑</a>
-                                <a class="lien" href="./index.php?ctrl=forum&action=editMessages&id=<?=$sujet->getId()?>">🖉</a>
+                                <a class="lien" href="./index.php?ctrl=forum&action=editView&id=<?=$message->getId()?>">🖉</a>
                             </div>
                             <div class="msgR"><?=$message->getTexte()?>
                             <?php
@@ -180,15 +192,6 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
     } else {
         echo "Pas de messages";
     }
-    ?>
-    <script>
-        const edit = document.getElementById("txt_edit")
-        edit.addEventListener('keyup', (event) =>{
-            console.log(document.getElementById("txt_edit").innerHTML)
-            document.getElementById("texte").value = document.getElementById("txt_edit").innerHTML;
-        })
-    </script>
-    <?php
     if(App\Session::getUser()){
         if ($sujet->getVerrouillage() == 0) {
             ?>
