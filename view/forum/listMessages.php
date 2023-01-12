@@ -108,6 +108,7 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
                             <?=$message->getMembre()->getPseudo()?> le : 
                             <?=$message->getDateCreation()?>
                             <a class="lien" href="./index.php?ctrl=forum&action=supprimerMessage&id=<?= $message->getId() ?>">🗑</a>
+                            <a class="lien" href="./index.php?ctrl=forum&action=editMessages&id=<?=$sujet->getId()?>">🖉</a>
                         </div>
                         <div class="msgL"><?=$message->getTexte()?>
                     <?php
@@ -117,6 +118,7 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
                             <?=$message->getMembre()->getPseudo()?> le : 
                             <?=$message->getDateCreation()?>
                             <a class="lien" href="./index.php?ctrl=forum&action=supprimerMessage&id=<?= $message->getId() ?>">🗑</a>
+                            <a class="lien" href="./index.php?ctrl=forum&action=editMessages&id=<?=$sujet->getId()?>">🖉</a>
                         </div>
                         <div class="msgR"><?=$message->getTexte()?>
                     <?php
@@ -136,14 +138,12 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
                                 <?=$message->getMembre()->getPseudo()?> le : 
                                 <?=$message->getDateCreation()?>
                                 <a class="lien" href="./index.php?ctrl=forum&action=supprimerMessage&id=<?= $message->getId() ?>">🗑</a>
+                                <a class="lien" href="./index.php?ctrl=forum&action=editMessages&id=<?=$sujet->getId()?>">🖉</a>
                             </div>
-                            <div class="msgR">
-                                <span id="txt_edit" class="textarea" role="textbox" contenteditable><?=$message->getTexte()?></span>
-                                <button id="editer" class="edit_btn" type="button" onclick="edition(<?= $message->getId() ?>)">Envoyer</button>
+                            <div class="msgR"><?=$message->getTexte()?>
                             <?php
                         }else{
                             ?>
-                            
                             <div class="msgr">
                                 <?=$message->getMembre()->getPseudo()?> le : 
                                 <?=$message->getDateCreation()?>
@@ -182,16 +182,11 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
     }
     ?>
     <script>
-        function edition(id){
-        txt = document.getElementById("txt_edit").innerHTML;
-        const url = "index.php?ctrl=forum&action=editerMessage";
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", url, false);
-        data = {texte : txt, msg : id};
-        document.getElementById("editer").addEventListener("click",
-            function() {xhr.send(data)},
-            false
-        );}
+        const edit = document.getElementById("txt_edit")
+        edit.addEventListener('keyup', (event) =>{
+            console.log(document.getElementById("txt_edit").innerHTML)
+            document.getElementById("texte").value = document.getElementById("txt_edit").innerHTML;
+        })
     </script>
     <?php
     if(App\Session::getUser()){
