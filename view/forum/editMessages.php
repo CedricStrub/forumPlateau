@@ -3,6 +3,7 @@
 $messages = $result["data"]['messages'];
 $sujet = $result["data"]["sujet"];
 $categories = $result["data"]['categories'];
+$edit = $result["data"]["edit"];
 
 $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()->getId();
 ?>
@@ -79,7 +80,7 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
         if (App\Session::getUser()->getId() == $sujet->getMembre()->getId()) {
             if($sujet->getVerrouillage() == 0){
                 ?>
-                <td> <div class="sw1"></div> </td>
+                <td> <div class="sw1"></div></td>
                 <td><a class="lien" href="./index.php?ctrl=forum&action=editerSujet&id=<?=$sujet->getId()?>"> 🖉</a></td>
                 <td><a class="lien" href="./index.php?ctrl=forum&action=verrouiller&id=<?=$sujet->getId()?>"> 🔓</a></td>
                 <td><a class="lien" href="./index.php?ctrl=forum&action=supprimerSujet&id=<?=$sujet->getId()?>"> 🗑</a></td>
@@ -103,34 +104,34 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
         foreach($messages as $message ){
             if(isset($_SESSION["user"])){
                 if($message->getMembre()->getId() == $_SESSION["user"]->getId() && $message->getMembre()->getId() == $sujet->getMembre()->getId()){
-                    ?>
-                        <div class="msgl">
-                            <?=$message->getMembre()->getPseudo()?> le : 
-                            <?=$message->getDateCreation()?>
-                            <a class="lien" href="./index.php?ctrl=forum&action=supprimerMessage&id=<?= $message->getId() ?>">🗑</a>
-                        </div>
-                        <div class="msgL"><?=$message->getTexte()?>
-                    <?php
-                }elseif(App\Session::isAdmin()) {
-                    ?>
-                        <div class="msgr">
-                            <?=$message->getMembre()->getPseudo()?> le : 
-                            <?=$message->getDateCreation()?>
-                            <a class="lien" href="./index.php?ctrl=forum&action=supprimerMessage&id=<?= $message->getId() ?>">🗑</a>
-                        </div>
-                        <div class="msgR"><?=$message->getTexte()?>
-                    <?php
-                }else{
-                    if($message->getMembre()->getId() == $sujet->getMembre()->getId()){
+                    if($message->getId() == $edit){
                         ?>
                         <div class="msgl">
                             <?=$message->getMembre()->getPseudo()?> le : 
                             <?=$message->getDateCreation()?>
+                            <a class="lien" href="./index.php?ctrl=forum&action=supprimerMessage&id=<?= $message->getId() ?>">🗑</a>
                         </div>
-                        <div class="msgL"><?=$message->getTexte()?>
+                        <div class="msgL">
+                            <form action="index.php?ctrl=forum&action=editerMessage" method="post">
+                                <span id="txt_edit" class="textarea" role="textbox" contenteditable><?=$message->getTexte()?></span>
+                                <input id="texte" name="texte" type='text' class='input' hidden/>
+                                <input id="msg" name="msg" type='text' class='input' value="<?= $message->getId() ?>" hidden/>
+                                <button class="edit_btn" type="submit" >Envoyer</button>
+                            </form>
                         <?php
                     }else{
-                        if($message->getMembre()->getId() == $_SESSION["user"]->getId()){
+                    ?>
+                        <div class="msgl">
+                            <?=$message->getMembre()->getPseudo()?> le : 
+                            <?=$message->getDateCreation()?>
+                            <a class="lien" href="./index.php?ctrl=forum&action=supprimerMessage&id=<?= $message->getId() ?>">🗑</a>
+                        </div>
+                        <div class="msgL"><?=$message->getTexte()?>
+                    <?php
+                    }
+                }elseif(App\Session::isAdmin()) {
+                    if($message->getMembre()->getId() == $_SESSION["user"]->getId()){
+                        if($message->getId() == $edit){
                             ?>
                             <div class="msgr">
                                 <?=$message->getMembre()->getPseudo()?> le : 
@@ -146,8 +147,116 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
                                 </form>
                             <?php
                         }else{
+                        ?>                
+                        <div class="msgr">
+                            <?=$message->getMembre()->getPseudo()?> le : 
+                            <?=$message->getDateCreation()?>
+                            <a class="lien" href="./index.php?ctrl=forum&action=supprimerMessage&id=<?= $message->getId() ?>">🗑</a>
+                        </div>
+                        <div class="msgR"><?=$message->getTexte()?>
+                        <?php
+                        }
+                    }else{
+                        if($message->getId() == $edit){
+                            if($message->getMembre()->getId() != $_SESSION["user"]->getId()){
+                                ?>
+                                <div class="msgr">
+                                    <?=$message->getMembre()->getPseudo()?> le : 
+                                    <?=$message->getDateCreation()?>
+                                    <a class="lien" href="./index.php?ctrl=forum&action=supprimerMessage&id=<?= $message->getId() ?>">🗑</a>
+                                </div>
+                                <div class="msgR">
+                                    <form action="index.php?ctrl=forum&action=editerMessage" method="post">
+                                        <span id="txt_edit" class="textarea" role="textbox" contenteditable><?=$message->getTexte()?></span>
+                                        <input id="texte" name="texte" type='text' class='input' hidden/>
+                                        <input id="msg" name="msg" type='text' class='input' value="<?= $message->getId() ?>" hidden/>
+                                        <button class="edit_btn" type="submit" >Envoyer</button>
+                                    </form>
+                                <?php
+                            }else{
                             ?>
-                            
+                            <div class="msgl">
+                                <?=$message->getMembre()->getPseudo()?> le : 
+                                <?=$message->getDateCreation()?>
+                                <a class="lien" href="./index.php?ctrl=forum&action=supprimerMessage&id=<?= $message->getId() ?>">🗑</a>
+                            </div>
+                            <div class="msgL">
+                                <form action="index.php?ctrl=forum&action=editerMessage" method="post">
+                                    <span id="txt_edit" class="textarea" role="textbox" contenteditable><?=$message->getTexte()?></span>
+                                    <input id="texte" name="texte" type='text' class='input' hidden/>
+                                    <input id="msg" name="msg" type='text' class='input' value="<?= $message->getId() ?>" hidden/>
+                                    <button class="edit_btn" type="submit" >Envoyer</button>
+                                </form>
+                            <?php
+                            }
+                        }
+                        else{
+                        ?>                
+                        <div class="msgr">
+                            <?=$message->getMembre()->getPseudo()?> le : 
+                            <?=$message->getDateCreation()?>
+                            <a class="lien" href="./index.php?ctrl=forum&action=supprimerMessage&id=<?= $message->getId() ?>">🗑</a>
+                        </div>
+                        <div class="msgR"><?=$message->getTexte()?>
+                        <?php
+                        }
+                    }
+                }else{
+                    if($message->getMembre()->getId() == $sujet->getMembre()->getId()){
+                        if($message->getId() == $edit){
+                            ?>
+                            <div class="msgl">
+                                <?=$message->getMembre()->getPseudo()?> le : 
+                                <?=$message->getDateCreation()?>
+                                <a class="lien" href="./index.php?ctrl=forum&action=supprimerMessage&id=<?= $message->getId() ?>">🗑</a>
+                            </div>
+                            <div class="msgL">
+                                <form action="index.php?ctrl=forum&action=editerMessage" method="post">
+                                    <span id="txt_edit" class="textarea" role="textbox" contenteditable><?=$message->getTexte()?></span>
+                                    <input id="texte" name="texte" type='text' class='input' hidden/>
+                                    <input id="msg" name="msg" type='text' class='input' value="<?= $message->getId() ?>" hidden/>
+                                    <button class="edit_btn" type="submit" >Envoyer</button>
+                                </form>
+                            <?php
+                        }else{
+                            ?>
+                            <div class="msgl">
+                                <?=$message->getMembre()->getPseudo()?> le : 
+                                <?=$message->getDateCreation()?>
+                            </div>
+                            <div class="msgL"><?=$message->getTexte()?>
+                            <?php
+                        }
+                    }else{
+                        if($message->getMembre()->getId() == $_SESSION["user"]->getId()){
+                            if($message->getId() == $edit){
+                                ?>
+                                <div class="msgr">
+                                    <?=$message->getMembre()->getPseudo()?> le : 
+                                    <?=$message->getDateCreation()?>
+                                    <a class="lien" href="./index.php?ctrl=forum&action=supprimerMessage&id=<?= $message->getId() ?>">🗑</a>
+                                </div>
+                                <div class="msgR">
+                                    <form action="index.php?ctrl=forum&action=editerMessage" method="post">
+                                        <span id="txt_edit" class="textarea" role="textbox" contenteditable><?=$message->getTexte()?></span>
+                                        <input id="texte" name="texte" type='text' class='input' hidden/>
+                                        <input id="msg" name="msg" type='text' class='input' value="<?= $message->getId() ?>" hidden/>
+                                        <button class="edit_btn" type="submit" >Envoyer</button>
+                                    </form>
+                                <?php
+                            }else{
+                                ?>
+                                <div class="msgr">
+                                    <?=$message->getMembre()->getPseudo()?> le : 
+                                    <?=$message->getDateCreation()?>
+                                    <a class="lien" href="./index.php?ctrl=forum&action=supprimerMessage&id=<?= $message->getId() ?>">🗑</a>
+                                    <a class="lien" href="./index.php?ctrl=forum&action=editMessages&id=<?=$message->getId()?>">🖉</a>
+                                </div>
+                                <div class="msgR"><?=$message->getTexte()?>
+                                <?php
+                            }
+                        }else{
+                            ?>
                             <div class="msgr">
                                 <?=$message->getMembre()->getPseudo()?> le : 
                                 <?=$message->getDateCreation()?>
@@ -188,8 +297,7 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
     <script>
         const edit = document.getElementById("txt_edit")
         edit.addEventListener('keyup', (event) =>{
-            console.log(document.getElementById("txt_edit").innerHTML)
-            document.getElementById("texte").value = document.getElementById("txt_edit").innerHTML;
+            document.getElementById("texte").value = document.getElementById("txt_edit").innerText;
         })
     </script>
     <?php
