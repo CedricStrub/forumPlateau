@@ -30,7 +30,7 @@ class HomeController extends AbstractController implements ControllerInterface{
 
 
         return [
-            "view" => VIEW_DIR."security/users.php",
+            "view" => VIEW_DIR."forum/listMembres.php",
             "data" => [
                 "users" => $users
             ]

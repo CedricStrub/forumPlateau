@@ -11,7 +11,7 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
 <div class="navigation">
     <div class="left ext_cat">
         <a href="index.php?ctrl=forum&action=listCategories">
-        <button class="nav_btn" type="button" >la liste des categories</button>
+        <button class="nav_btn" type="button">la liste des categories</button>
         </a>
         <div class="spacer2"></div>
         <div class="C_content">
@@ -81,14 +81,14 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
             if($sujet->getVerrouillage() == 0){
                 ?>
                 <td> <div class="sw1"></div></td>
-                <td><a class="lien" href="./index.php?ctrl=forum&action=editerSujet&id=<?=$sujet->getId()?>"> 🖉</a></td>
+                <td><a class="lien" href="./index.php?ctrl=forum&action=editSujets&id=<?=$sujet->getId()?>"> 🖉</a></td>
                 <td><a class="lien" href="./index.php?ctrl=forum&action=verrouiller&id=<?=$sujet->getId()?>"> 🔓</a></td>
                 <td><a class="lien" href="./index.php?ctrl=forum&action=supprimerSujet&id=<?=$sujet->getId()?>"> 🗑</a></td>
                 <?php
             }else{
                 ?>
                 <td> <div class="sw1"></div> </td>
-                <td><a class="lien" href="./index.php?ctrl=forum&action=editerSujet&id=<?=$sujet->getId()?>"> 🖉</a></td>
+                <td><a class="lien" href="./index.php?ctrl=forum&action=editSujets&id=<?=$sujet->getId()?>"> 🖉</a></td>
                 <td><a class="lien" href="./index.php?ctrl=forum&action=deverrouiller&id=<?=$sujet->getId()?>"> 🔒</a></td>
                 <td><a class="lien" href="./index.php?ctrl=forum&action=supprimerSujet&id=<?=$sujet->getId()?>"> 🗑</a></td>
                 <?php
@@ -125,6 +125,7 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
                             <?=$message->getMembre()->getPseudo()?> le : 
                             <?=$message->getDateCreation()?>
                             <a class="lien" href="./index.php?ctrl=forum&action=supprimerMessage&id=<?= $message->getId() ?>">🗑</a>
+                            <a class="lien" href="./index.php?ctrl=forum&action=editView&id=<?=$message->getId()?>">🖉</a>
                         </div>
                         <div class="msgL"><?=$message->getTexte()?>
                     <?php
@@ -152,6 +153,7 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
                             <?=$message->getMembre()->getPseudo()?> le : 
                             <?=$message->getDateCreation()?>
                             <a class="lien" href="./index.php?ctrl=forum&action=supprimerMessage&id=<?= $message->getId() ?>">🗑</a>
+                            <a class="lien" href="./index.php?ctrl=forum&action=editView&id=<?=$message->getId()?>">🖉</a>
                         </div>
                         <div class="msgR"><?=$message->getTexte()?>
                         <?php
@@ -196,6 +198,7 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
                             <?=$message->getMembre()->getPseudo()?> le : 
                             <?=$message->getDateCreation()?>
                             <a class="lien" href="./index.php?ctrl=forum&action=supprimerMessage&id=<?= $message->getId() ?>">🗑</a>
+                            <a class="lien" href="./index.php?ctrl=forum&action=editView&id=<?=$message->getId()?>">🖉</a>
                         </div>
                         <div class="msgR"><?=$message->getTexte()?>
                         <?php
@@ -241,7 +244,7 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
                                         <span id="txt_edit" class="textarea" role="textbox" contenteditable><?=$message->getTexte()?></span>
                                         <input id="texte" name="texte" type='text' class='input' hidden/>
                                         <input id="msg" name="msg" type='text' class='input' value="<?= $message->getId() ?>" hidden/>
-                                        <button class="edit_btn" type="submit" >Envoyer</button>
+                                        <button class="edit_btn" type="submit">Envoyer</button>
                                     </form>
                                 <?php
                             }else{
@@ -297,7 +300,7 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
     <script>
         const edit = document.getElementById("txt_edit")
         edit.addEventListener('keyup', (event) =>{
-            document.getElementById("texte").value = document.getElementById("txt_edit").innerText;
+            document.getElementById("texte").value = edit.innerText;
         })
     </script>
     <?php

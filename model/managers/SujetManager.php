@@ -59,4 +59,13 @@ class SujetManager extends Manager{
         return DAO::delete($sql, ['id' => $id]); 
     }
 
+    public function editer($txt,$id){
+        var_dump($txt);
+        var_dump($id);
+        $sql = "UPDATE sujet
+            SET titre = :txt
+            WHERE id_sujet = :id";
+        DAO::update($sql,["id" => $id,"txt" => $txt]);
+    }
+
 }

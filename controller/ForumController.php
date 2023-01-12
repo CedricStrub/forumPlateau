@@ -81,6 +81,23 @@ class ForumController extends AbstractController implements ControllerInterface{
 
     }
 
+    public function editSujets($id){
+
+        $managerMessages = new MessageManager();
+        $managerSujet = new SujetManager();
+        $managerCategorie = new CategorieManager();
+
+        return[
+            "view" => VIEW_DIR."forum/editSujets.php",
+            "data" => [
+                "sujet" => $managerSujet->findOneById($id),
+                "messages" => $managerMessages->findMsgByPost($id),
+                "categories" => $managerCategorie->findAll(["nom", "ASC"])
+            ]
+        ];
+
+    }
+
     public function editView($id){
 
         $managerMessages = new MessageManager();
@@ -136,7 +153,7 @@ class ForumController extends AbstractController implements ControllerInterface{
     } 
 
     public function addMessage(){
-        $message = filter_input(INPUT_POST, "message", FILTER_SANITIZE_SPECIAL_CHARS);
+        $message = $_POST['message'];
         $sujet = filter_input(INPUT_POST, "sujet", FILTER_SANITIZE_NUMBER_INT);
 
         if ($message) {
@@ -218,6 +235,25 @@ class ForumController extends AbstractController implements ControllerInterface{
         
         $this->redirectTo("forum", "editMessages", $id);
     } 
+
+    public function editerSujet() {
+        $txt = filter_input(INPUT_POST, "texte", FILTER_SANITIZE_SPECIAL_CHARS);
+        $id = filter_input(INPUT_POST, "msg", FILTER_SANITIZE_NUMBER_INT);
+
+        $managerSujet = new SujetManager();
+        var_dump($txt);
+        var_dump($id);
+
+        if($txt && $id){
+            
+            $managerSujet->editer($txt,$id);
+
+        }else{
+            echo("Le texte ne peut pas être vide !"); 
+        }
+
+        $this->redirectTo("forum", "listMessages", $id);
+    }
 
 
 }

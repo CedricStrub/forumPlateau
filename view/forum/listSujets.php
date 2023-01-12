@@ -87,7 +87,6 @@ $categories = $result["data"]['categories'];
                 <?php
                 if(App\Session::isAdmin()){
                     ?>
-                    <td><a class="lien" href="./index.php?ctrl=forum&action=editerSujet&id=<?=$sujet->getId()?>"> 🖉</a></td>
                     <td><a class="lien" href="./index.php?ctrl=forum&action=supprimerSujet&id=<?=$sujet->getId()?>"> 🗑</a></td>
                     <?php
                     if($sujet->getVerrouillage()){
@@ -102,7 +101,6 @@ $categories = $result["data"]['categories'];
                 }elseif(isset($_SESSION["user"])){
                     if($sujet->getMembre()->getId() == $_SESSION["user"]->getId()){
                         ?>
-                        <td><a class="lien" href="./index.php?ctrl=forum&action=editerSujet&id=<?=$sujet->getId()?>"> 🖉</a></td>
                         <td><a class="lien" href="./index.php?ctrl=forum&action=supprimerSujet&id=<?=$sujet->getId()?>"> 🗑</a></td>
                         <?php
                     if($sujet->getVerrouillage()){

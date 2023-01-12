@@ -80,14 +80,14 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
             if($sujet->getVerrouillage() == 0){
                 ?>
                 <td> <div class="sw1"></div> </td>
-                <td><a class="lien" href="./index.php?ctrl=forum&action=editerSujet&id=<?=$sujet->getId()?>"> 🖉</a></td>
+                <td><a class="lien" href="./index.php?ctrl=forum&action=editSujets&id=<?=$sujet->getId()?>"> 🖉</a></td>
                 <td><a class="lien" href="./index.php?ctrl=forum&action=verrouiller&id=<?=$sujet->getId()?>"> 🔓</a></td>
                 <td><a class="lien" href="./index.php?ctrl=forum&action=supprimerSujet&id=<?=$sujet->getId()?>"> 🗑</a></td>
                 <?php
             }else{
                 ?>
                 <td> <div class="sw1"></div> </td>
-                <td><a class="lien" href="./index.php?ctrl=forum&action=editerSujet&id=<?=$sujet->getId()?>"> 🖉</a></td>
+                <td><a class="lien" href="./index.php?ctrl=forum&action=editSujets&id=<?=$sujet->getId()?>"> 🖉</a></td>
                 <td><a class="lien" href="./index.php?ctrl=forum&action=deverrouiller&id=<?=$sujet->getId()?>"> 🔒</a></td>
                 <td><a class="lien" href="./index.php?ctrl=forum&action=supprimerSujet&id=<?=$sujet->getId()?>"> 🗑</a></td>
                 <?php
@@ -204,7 +204,7 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
                     <td><span class="f_titre">Message</span></td>
                 </tr>
                 <tr>
-                    <td><textarea id="message" name="message" row="10" cols="100" placeholder="message"></textarea></td>
+                    <td><textarea id="message" class="textarea" name="message" row="10" cols="100" placeholder="message"></textarea></td>
                 </tr>
                 <tr>
                     <td><input class="nav_btn limit_btn" type="submit" value="Submit"></td>
