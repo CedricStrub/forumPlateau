@@ -1,4 +1,5 @@
     <?php
+    use Model\Managers\MembreManager;
 
     $categories = $result["data"]['categories'];
         
@@ -15,6 +16,10 @@
             <table>
             <tbody>
             <?php
+            if(App\Session::getUser()){
+                $managerMembre = new MembreManager;
+                $lock = $managerMembre->findOneById($_SESSION["user"]->getId())->getVerrouiller();
+            }
             foreach($categories as $categorie ){
                 $link = "./index.php?ctrl=forum&action=listSujets&id=" . $categorie->getId();
                 ?>
@@ -22,7 +27,7 @@
                 <td><a class="lien" href=<?=$link?>><?=$categorie->getNom()?></a></td>
                 
                 <?php
-                if (App\Session::isAdmin()) {
+                if (App\Session::isAdmin() && $lock == 0) {
                     ?>
                     <td><a class="lien" href="./index.php?ctrl=forum&action=supprimerCategorie&id=<?= $categorie->getId() ?>"> 🗑</a></td>
                 <?php
@@ -38,7 +43,7 @@
             </div>
             <div class="spacer2"></div>
             <?php
-            if(App\Session::isAdmin()){
+            if(App\Session::isAdmin() && $lock == 0){
                 ?>
                 <div class="C_content  ext_cat">
                 <h1>Ajouter Catégorie</h1>

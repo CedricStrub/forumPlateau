@@ -1,4 +1,5 @@
 <?php
+use Model\Managers\MembreManager;
 
 $sujets = $result["data"]['sujets'];
 $cat = $result["data"]["categorie"];
@@ -18,6 +19,10 @@ $categories = $result["data"]['categories'];
         <table>
         <tbody>
         <?php
+        if(App\Session::getUser()){
+            $managerMembre = new MembreManager;
+            $lock = $managerMembre->findOneById($_SESSION["user"]->getId())->getVerrouiller();
+        }
         foreach($categories as $categorie ){
             $link = "./index.php?ctrl=forum&action=listSujets&id=" . $categorie->getId();
             ?>
@@ -25,7 +30,7 @@ $categories = $result["data"]['categories'];
             <td><a class="lien" href=<?=$link?>><?=$categorie->getNom()?></a></td>
             
             <?php
-            if (App\Session::isAdmin()) {
+            if (App\Session::isAdmin() && $lock == 0) {
                 ?>
                 <td><a class="lien" href="./index.php?ctrl=forum&action=supprimerCategorie&id=<?= $categorie->getId() ?>"> 🗑</a></td>
             <?php
@@ -41,7 +46,7 @@ $categories = $result["data"]['categories'];
         </div>
         <div class="spacer2"></div>
             <?php
-            if(App\Session::isAdmin()){
+            if(App\Session::isAdmin() && $lock == 0){
                 ?>
                 <div class="C_content  ext_cat">
                 <h1>Ajouter Catégorie</h1>
@@ -66,7 +71,7 @@ $categories = $result["data"]['categories'];
                 <div class="spacer2"></div>
                 <?php
             }
- 
+
             ?>
         </div>
         <div class="spacer2"></div>
@@ -85,7 +90,7 @@ $categories = $result["data"]['categories'];
             <tr>
                 <td><a class="lien" href=<?= $link ?>><?= $sujet->getTitre() ?></a></td>
                 <?php
-                if(App\Session::isAdmin()){
+                if(App\Session::isAdmin() && $lock == 0){
                     ?>
                     <td><a class="lien" href="./index.php?ctrl=forum&action=supprimerSujet&id=<?=$sujet->getId()?>"> 🗑</a></td>
                     <?php
@@ -98,7 +103,7 @@ $categories = $result["data"]['categories'];
                         <td><a href="./index.php?ctrl=forum&action=verrouiller&id=<?=$sujet->getId()?>">🔓</a></td>
                         <?php
                     }
-                }elseif(isset($_SESSION["user"])){
+                }elseif(isset($_SESSION["user"]) && $lock == 0){
                     if($sujet->getMembre()->getId() == $_SESSION["user"]->getId()){
                         ?>
                         <td><a class="lien" href="./index.php?ctrl=forum&action=supprimerSujet&id=<?=$sujet->getId()?>"> 🗑</a></td>
@@ -129,7 +134,7 @@ $categories = $result["data"]['categories'];
             <?php
         }
 
-        if(App\Session::getUser()){
+        if(App\Session::getUser() && $lock == 0){
             ?>
             <div class="spacer2"></div>
             <div class="C_content  ext_cat">

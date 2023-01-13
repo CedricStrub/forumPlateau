@@ -1,4 +1,5 @@
 <?php
+use Model\Managers\MembreManager;
 
 $messages = $result["data"]['messages'];
 $sujet = $result["data"]["sujet"];
@@ -17,6 +18,10 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
         <table>
         <tbody>
         <?php
+        if(App\Session::getUser()){
+            $managerMembre = new MembreManager;
+            $lock = $managerMembre->findOneById($_SESSION["user"]->getId())->getVerrouiller();
+        }
         foreach($categories as $categorie ){
             $link = "./index.php?ctrl=forum&action=listSujets&id=" . $categorie->getId();
             ?>
@@ -24,7 +29,7 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
             <td><a class="lien" href=<?=$link?>><?=$categorie->getNom()?></a></td>
             
             <?php
-            if (App\Session::isAdmin()) {
+            if (App\Session::isAdmin() && $lock == 0) {
                 ?>
                 <td><a class="lien" href="./index.php?ctrl=forum&action=supprimerCategorie&id=<?= $categorie->getId() ?>"> 🗑</a></td>
             <?php
@@ -40,7 +45,7 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
         </div>
         <div class="spacer2"></div>
         <?php
-        if(App\Session::isAdmin()){
+        if(App\Session::isAdmin() && $lock == 0){
             ?>
             <div class="C_content  ext_cat">
             <h1>Ajouter Catégorie</h1>
@@ -75,7 +80,7 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
     
     <h1>Liste Messages : </h1>
     <?php
-    if(App\Session::getUser()){
+    if(App\Session::getUser() && $lock == 0){
         if (App\Session::getUser()->getId() == $sujet->getMembre()->getId()) {
             if($sujet->getVerrouillage() == 0){
                 ?>
@@ -120,7 +125,7 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
     <?php
     if($messages){
         foreach($messages as $message ){
-            if(isset($_SESSION["user"])){
+            if(isset($_SESSION["user"]) && $lock == 0){
                 if($message->getMembre()->getId() == $_SESSION["user"]->getId() && $message->getMembre()->getId() == $sujet->getMembre()->getId()){
                     ?>
                         <div class="msgl">
@@ -211,7 +216,7 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
     } else {
         echo "Pas de messages";
     }
-    if(App\Session::getUser()){
+    if(App\Session::getUser() && $lock == 0){
         if ($sujet->getVerrouillage() == 0) {
             ?>
         <h1>Répondre</h1>

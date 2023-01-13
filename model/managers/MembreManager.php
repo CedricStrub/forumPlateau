@@ -28,6 +28,28 @@ class MembreManager extends Manager{
 
     }
 
+    public function lock($id){
+        $sql = "UPDATE membre
+            SET verrouiller = 1
+            WHERE id_membre = :id";
+        DAO::update($sql,["id" => $id]);
+    }
+
+    public function unlock($id){
+        $sql = "UPDATE membre
+            SET verrouiller = 0
+            WHERE id_membre = :id";
+        DAO::update($sql,["id" => $id]);
+    }
+
+    public function deleteFrom($id){
+        $sql = "DELETE FROM membre
+                WHERE id_membre = :id
+                ";
+
+        return DAO::delete($sql, ['id' => $id]); 
+    }
+
     public function findOneByPseudo($pseudo){
 
         $sql = "SELECT *

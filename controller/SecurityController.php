@@ -124,6 +124,13 @@ class SecurityController extends AbstractController implements ControllerInterfa
         ];
     }
 
+    public function supprimerMembre($id){
+        $managerMembre = new MembreManager();
+        $managerMembre->deleteFrom($id);
+        $managerMembre->delete($id);
+        $this->redirectTo("home","users");
+    }
+
     public function deconnexion(){
         unset($_SESSION['user']);
         $this->redirectTo("home");

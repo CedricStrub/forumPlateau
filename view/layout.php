@@ -65,29 +65,18 @@
     
     <script>
     tinymce.init({
-      selector: '.textarea',
-      plugins: '',
-      formats: {
-        alignleft: {selector : 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img,audio,video', classes : 'left'},
-        aligncenter: {selector : 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img,audio,video', classes : 'center'},
-        alignright: {selector : 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img,audio,video', classes : 'right'},
-        alignjustify: {selector : 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img,audio,video', classes : 'full'},
-        bold: {inline : 'span', 'classes' : 'bold'},
-        italic: {inline : 'span', 'classes' : 'italic'},
-        underline: {inline : 'span', 'classes' : 'underline', exact : true},
-        strikethrough: {inline : 'del'},
-
-    }
-      toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-      tinycomments_mode: 'embedded',
-      tinycomments_author: 'Author name',
-      mergetags_list: [
-        { value: 'First.Name', title: 'First Name' },
-        { value: 'Email', title: 'Email' },
-      ]
-      
-    });
-  </script>
+        selector: '.textarea',
+        plugins: '',
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+        tinycomments_mode: 'embedded',
+        tinycomments_author: 'Author name',
+        mergetags_list: [
+            { value: 'First.Name', title: 'First Name' },
+            { value: 'Email', title: 'Email' },
+        ]
+        
+        });
+    </script>
 
     <script
         src="https://code.jquery.com/jquery-3.4.1.min.js"

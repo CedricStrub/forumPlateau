@@ -11,6 +11,11 @@
                 $url.= $ctrl ? "ctrl=".$ctrl : "";
                 $url.= $action ? "&action=".$action : "";
                 $url.= $id ? "&id=".$id : "";
+            }elseif($ctrl == "home" && $action != null){
+                $url = "/CedricStrub/forumPlateau/index.php?";
+                $url.= $ctrl ? "ctrl=".$ctrl : "";
+                $url.= $action ? "&action=".$action : "";
+                $url.= $id ? "&id=".$id : "";
             }
             else $url = "/CedricStrub/forumPlateau/index.php";
             header("Location: $url");

@@ -1,6 +1,8 @@
 <?php
+use Model\Managers\MembreManager;
 
 $users = $result["data"]['users'];
+$categories = $result["data"]['categories'];
     
 ?>
 
@@ -15,6 +17,10 @@ $users = $result["data"]['users'];
         <table>
         <tbody>
         <?php
+        if(App\Session::getUser()){
+            $managerMembre = new MembreManager;
+            $lock = $managerMembre->findOneById($_SESSION["user"]->getId())->getVerrouiller();
+        }
         foreach($categories as $categorie ){
             $link = "./index.php?ctrl=forum&action=listSujets&id=" . $categorie->getId();
             ?>
@@ -22,7 +28,7 @@ $users = $result["data"]['users'];
             <td><a class="lien" href=<?=$link?>><?=$categorie->getNom()?></a></td>
             
             <?php
-            if (App\Session::isAdmin()) {
+            if (App\Session::isAdmin() && $lock == 0) {
                 ?>
                 <td><a class="lien" href="./index.php?ctrl=forum&action=supprimerCategorie&id=<?= $categorie->getId() ?>"> 🗑</a></td>
             <?php
@@ -38,7 +44,7 @@ $users = $result["data"]['users'];
         </div>
         <div class="spacer2"></div>
         <?php
-        if(App\Session::isAdmin()){
+        if(App\Session::isAdmin() && $lock == 0){
             ?>
             <div class="C_content  ext_cat">
             <h1>Ajouter Catégorie</h1>
@@ -84,17 +90,30 @@ $users = $result["data"]['users'];
     }
     ?>
     </div>
-    <div class="right">
+    <div class="right  ext_cat">
         <?php
-        if(App\Session::isAdmin()){
+        if(App\Session::isAdmin() && $lock == 0){
             ?>
             <a href="index.php?ctrl=home&action=users">
             <button class="nav_btn">Voir la liste des Membres</button>
+            
             </a>
             <?php
             foreach($users as $user ){
                 ?>
                 <p><?=$user->getPseudo()?></p>
+                <?php
+                if($user->getVerrouiller() == 0){
+                    ?>
+                    <a class="lien" href="index.php?ctrl=home&action=verrouiller&id=<?= $user->getId() ?>"> 🔒</a>
+                    <?php
+                }else{
+                    ?>
+                    <a class="lien" href="index.php?ctrl=home&action=deverrouiller&id=<?= $user->getId() ?>"> 🔓</a>
+                    <?php
+                }
+                ?>
+                <a class="lien" href="index.php?ctrl=security&action=supprimerMembre&id=<?=$user->getId()?>"> 🗑</a>
                 <?php
             }
         }

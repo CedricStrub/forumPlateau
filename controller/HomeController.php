@@ -26,15 +26,28 @@ class HomeController extends AbstractController implements ControllerInterface{
         $this->restrictTo("ADMIN");
 
         $manager = new MembreManager();
+        $managerCategorie = new CategorieManager();
         $users = $manager->findAll(['dateInscription', 'DESC']);
-
 
         return [
             "view" => VIEW_DIR."forum/listMembres.php",
             "data" => [
+                "categories" => $managerCategorie->findAll(["nom", "ASC"]),
                 "users" => $users
             ]
         ];
+    }
+
+    public function verrouiller($id){
+        $managerMembre = new MembreManager();
+        $managerMembre->lock($id);
+        $this->redirectTo("home", "users", $id);
+    }
+
+    public function deverrouiller($id){
+        $managerMembre = new MembreManager();
+        $managerMembre->unlock($id);
+        $this->redirectTo("home", "users", $id);
     }
 
     public function forumRules(){

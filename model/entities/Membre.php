@@ -11,6 +11,7 @@ final class Membre extends Entity{
     private $password;
     private $role;
     private $dateInscription;
+    private $verrouiller;
 
     public function __construct($data){         
         $this->hydrate($data);        
@@ -94,5 +95,14 @@ final class Membre extends Entity{
         else{
             return false;
         }
+    }
+
+    public function getVerrouiller(){
+        return $this->verrouiller;
+    }
+
+    public function setVerrouiller($lock){
+        $this->verrouiller = $lock;
+        return $this;
     }
 }
