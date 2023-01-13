@@ -22,7 +22,7 @@ $categories = $result["data"]['categories'];
         if(App\Session::getUser()){
             $managerMembre = new MembreManager;
             $lock = $managerMembre->findOneById($_SESSION["user"]->getId())->getVerrouiller();
-        }
+        }else $lock = 1;
         foreach($categories as $categorie ){
             $link = "./index.php?ctrl=forum&action=listSujets&id=" . $categorie->getId();
             ?>
@@ -154,7 +154,7 @@ $categories = $result["data"]['categories'];
                         <td><span class="f_titre">Message</span></td>
                     </tr>
                     <tr>
-                        <td><input type="textarea" id="message" name="message" placeholder="message"></td>
+                        <td><input type="textarea" class="textarea" id="message" name="message" placeholder="message"></td>
                     </tr>
                     <tr>
                         <td><input type="submit" value="Submit"></td>

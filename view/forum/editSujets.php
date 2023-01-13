@@ -21,7 +21,7 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
         if(App\Session::getUser()){
             $managerMembre = new MembreManager;
             $lock = $managerMembre->findOneById($_SESSION["user"]->getId())->getVerrouiller();
-        }
+        }else $lock = 1;
         foreach($categories as $categorie ){
             $link = "./index.php?ctrl=forum&action=listSujets&id=" . $categorie->getId();
             ?>
@@ -86,7 +86,7 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
                 ?>
                 <td> <div class="sw1"></div> </td>
                 <td><form action="index.php?ctrl=forum&action=editerSujet" method="post">
-                    <span id="txt_edit" class="textarea" role="textbox" contenteditable><?=$sujet->getTitre()?></span>
+                    <span id="txt_edit" class="txt-input" role="textbox" contenteditable><?=$sujet->getTitre()?></span>
                     <input id="texte" name="texte" type='text' class='input' hidden/>
                     <input id="msg" name="msg" type='text' class='input' value="<?= $sujet->getId() ?>" hidden/>
                     <td><button class="edit_btn" type="submit">Envoyer</button></td>
@@ -98,7 +98,7 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
                 ?>
                 <td> <div class="sw1"></div> </td>
                 <td><form action="index.php?ctrl=forum&action=editerSujet" method="post">
-                    <span id="txt_edit" class="textarea" role="textbox" contenteditable><?=$sujet->getTitre()?></span>
+                    <span id="txt_edit" class="txt-input" role="textbox" contenteditable><?=$sujet->getTitre()?></span>
                     <input id="texte" name="texte" type='text' class='input' hidden/>
                     <input id="msg" name="msg" type='text' class='input' value="<?= $sujet->getId() ?>" hidden/>
                     <button class="edit_btn" type="submit">Envoyer</button>

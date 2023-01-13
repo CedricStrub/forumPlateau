@@ -11,7 +11,7 @@
 }
 
 
-* {
+body {
   padding: 0;
   box-sizing: border-box;
   background: var(--pri);
@@ -179,6 +179,30 @@ input{
   border: 1px solid;
   border-color: var(--ter);
   color: var(--ter);
+  background: var(--pri);
+}
+
+.txt-input {
+  border: 1px solid #ccc;
+  font-family: inherit;
+  font-size: 30px;
+  padding: 1px 6px;
+  background: transparent;
+}
+
+.txt-input {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  resize: both;
+  min-height: 40px;
+  line-height: 30px;
+  background: transparent;
+}
+
+.txt-input[contenteditable]:empty::before {
+  content: "Placeholder still possible";
+  color: gray;
 }
 
 .C_content{
@@ -323,3 +347,4 @@ input{
   width: 100%;
   max-width: 200px;
 }
+

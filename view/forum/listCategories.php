@@ -19,7 +19,7 @@
             if(App\Session::getUser()){
                 $managerMembre = new MembreManager;
                 $lock = $managerMembre->findOneById($_SESSION["user"]->getId())->getVerrouiller();
-            }
+            }else $lock = 1;
             foreach($categories as $categorie ){
                 $link = "./index.php?ctrl=forum&action=listSujets&id=" . $categorie->getId();
                 ?>

@@ -21,7 +21,7 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
         if(App\Session::getUser()){
             $managerMembre = new MembreManager;
             $lock = $managerMembre->findOneById($_SESSION["user"]->getId())->getVerrouiller();
-        }
+        }else $lock = 1;
         foreach($categories as $categorie ){
             $link = "./index.php?ctrl=forum&action=listSujets&id=" . $categorie->getId();
             ?>
@@ -209,7 +209,7 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
                     <td><span class="f_titre">Message</span></td>
                 </tr>
                 <tr>
-                    <td><textarea id="message" class="textarea" name="message" row="10" cols="100" placeholder="message"></textarea></td>
+                    <td><textarea id="appeditor" class="textarea" name="message" row="10" cols="100" placeholder="message"></textarea></td>
                 </tr>
                 <tr>
                     <td><input class="nav_btn limit_btn" type="submit" value="Submit"></td>

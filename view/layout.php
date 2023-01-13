@@ -65,17 +65,13 @@
     
     <script>
     tinymce.init({
-        selector: '.textarea',
-        plugins: '',
-        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-        tinycomments_mode: 'embedded',
-        tinycomments_author: 'Author name',
-        mergetags_list: [
-            { value: 'First.Name', title: 'First Name' },
-            { value: 'Email', title: 'Email' },
-        ]
-        
+        selector: "#appeditor",
+        menubar: false,
+        content_css: ["writer", "./public/editor.css"],
+        plugins: "importcss",
+        importcss_append: true,
         });
+
     </script>
 
     <script
@@ -84,6 +80,14 @@
         crossorigin="anonymous">
     </script>
     <script>
+    tinymce.init({
+        selector: '.textarea',
+        menubar: false,
+        skin_url: './public/skins/ui'
+        content_css: './public/skins/content',
+        plugins: "importcss",
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+        });
 
         $(document).ready(function(){
             $(".message").each(function(){

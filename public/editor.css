@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Dosis&display=swap');
+
+:root{
+    --txt: rgb(0, 0, 0);
+    --pri: rgb(3, 8, 23);
+    --sec: rgb(135, 158, 187);
+    --ter: rgb(190, 237, 255);
+    --qua: rgb(43, 50, 54);
+    color: var(--ter);
+    font-family: 'Dosis', sans-serif;
+}
+
+
+body { 
+    color: var(--ter);
+    background-color: var(--pri);
+    font-family: 'Dosis', sans-serif;
+    line-height: 1.4;
+}
