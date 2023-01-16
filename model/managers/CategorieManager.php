@@ -15,4 +15,13 @@ class CategorieManager extends Manager{
         parent::connect();
     }
 
+    public function editer($txt,$id){
+        var_dump($txt);
+        var_dump($id);
+        $sql = "UPDATE categorie
+            SET nom = :txt
+            WHERE id_categorie = :id";
+        DAO::update($sql,["id" => $id,"txt" => $txt]);
+    }
+
 }

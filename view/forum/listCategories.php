@@ -30,6 +30,7 @@
                 if (App\Session::isAdmin() && $lock == 0) {
                     ?>
                     <td><a class="lien" href="./index.php?ctrl=forum&action=supprimerCategorie&id=<?= $categorie->getId() ?>"> 🗑</a></td>
+                    <td><a class="lien" href="./index.php?ctrl=forum&action=editCategorie&id=<?= $categorie->getId() ?>">🖉</a></td>
                 <?php
                 }
                 ?>

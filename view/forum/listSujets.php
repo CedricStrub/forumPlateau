@@ -33,6 +33,7 @@ $categories = $result["data"]['categories'];
             if (App\Session::isAdmin() && $lock == 0) {
                 ?>
                 <td><a class="lien" href="./index.php?ctrl=forum&action=supprimerCategorie&id=<?= $categorie->getId() ?>"> 🗑</a></td>
+                <td><a class="lien" href="./index.php?ctrl=forum&action=editCategorie&id=<?= $categorie->getId() ?>">🖉</a></td>
             <?php
             }
             ?>
@@ -157,7 +158,7 @@ $categories = $result["data"]['categories'];
                         <td><input type="textarea" class="textarea" id="message" name="message" placeholder="message"></td>
                     </tr>
                     <tr>
-                        <td><input type="submit" value="Submit"></td>
+                        <td><input class="nav_btn limit_btn" type="submit" value="Submit"></td>
                     </tr>
                 </tbody>
             </table>

@@ -8,36 +8,36 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dosis&display=swap" rel="stylesheet"> 
-    <script src="https://cdn.tiny.cloud/1/qi3spvqhf4sct9g8x7a9wkdgegdttczj0jszrc74fok95lxa/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="./public/node_modules/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+
     <title>FORUM</title>
 </head>
 <body>
-
-            <header>
-                <div class="topnav">
-                <div class="titre"><span>Forum</span>
-                    <a class="btn" href="/CedricStrub/forumPlateau/index.php">Accueil</a>
-                    
-                    <?php
-                    if(App\Session::getUser()){
-                        ?>
-                        <a class="split btn" href="index.php?ctrl=security&action=profil">&nbsp;<?= App\Session::getUser()->getPseudo()?></a>
-                        <a class="split btn" href="index.php?ctrl=security&action=deconnexion">Déconnexion</a>
-                    <?php
-                    }
-                    else{
-                        ?>
-                        <a class="split btn" href="index.php?ctrl=security&action=inscription">Inscription</a>
-                        <a class="split btn" href="index.php?ctrl=security&action=connexion">Connexion</a>
-                    <?php
-                    }
-                    ?>
-                    </div>
-                </div>
-                </header>
-                <!-- c'est ici que les messages (erreur ou succès) s'affichent-->
-                <h3 class="message" style="color: red"><?= App\Session::getFlash("error") ?></h3>
-                <h3 class="message" style="color: green"><?= App\Session::getFlash("success") ?></h3>
+    <header>
+        <div class="topnav">
+        <div class="titre"><span>Forum</span>
+            <a class="btn" href="/CedricStrub/forumPlateau/index.php">Accueil</a>
+            
+            <?php
+            if(App\Session::getUser()){
+                ?>
+                <a class="split btn" href="index.php?ctrl=security&action=profil">&nbsp;<?= App\Session::getUser()->getPseudo()?></a>
+                <a class="split btn" href="index.php?ctrl=security&action=deconnexion">Déconnexion</a>
+            <?php
+            }
+            else{
+                ?>
+                <a class="split btn" href="index.php?ctrl=security&action=inscription">Inscription</a>
+                <a class="split btn" href="index.php?ctrl=security&action=connexion">Connexion</a>
+            <?php
+            }
+            ?>
+            </div>
+        </div>
+        </header>
+        <!-- c'est ici que les messages (erreur ou succès) s'affichent-->
+        <h3 class="message" style="color: red"><?= App\Session::getFlash("error") ?></h3>
+        <h3 class="message" style="color: green"><?= App\Session::getFlash("success") ?></h3>
             <main id="forum">
                 <?= $page ?>
             </main>
@@ -65,13 +65,15 @@
     
     <script>
     tinymce.init({
-        selector: "#appeditor",
+        selector: ".textarea",
         menubar: false,
-        content_css: ["writer", "./public/editor.css"],
+        height: 250,
+        skin_url: "./public/node_modules/tinymce/skins/ui/forum",
+        content_css: "./public/node_modules/tinymce/skins/content/forum",
         plugins: "importcss",
+        content_style: "body{color:rgb(190, 237, 255);line-height: 1;} p{margin:0px;}",
         importcss_append: true,
         });
-
     </script>
 
     <script
@@ -79,16 +81,8 @@
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous">
     </script>
-    <script>
-    tinymce.init({
-        selector: '.textarea',
-        menubar: false,
-        skin_url: './public/skins/ui'
-        content_css: './public/skins/content',
-        plugins: "importcss",
-        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-        });
 
+    <script>
         $(document).ready(function(){
             $(".message").each(function(){
                 if($(this).text().length > 0){
@@ -115,8 +109,6 @@
                 content_css: '//www.tiny.cloud/css/codepen.min.css'
             });
         })
-
-        
 
         /*
         $("#ajaxbtn").on("click", function(){

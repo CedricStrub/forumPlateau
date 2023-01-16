@@ -98,6 +98,20 @@ class ForumController extends AbstractController implements ControllerInterface{
 
     }
 
+    public function editCategorie($id){
+
+        $managerCategorie = new CategorieManager();
+
+        return[
+            "view" => VIEW_DIR."forum/editCategorie.php",
+            "data" => [
+                "categories" => $managerCategorie->findAll(["nom", "ASC"]),
+                "edit" => $id
+            ]
+        ];
+
+    }
+
     public function editView($id){
 
         $managerMessages = new MessageManager();
@@ -254,6 +268,23 @@ class ForumController extends AbstractController implements ControllerInterface{
 
         $this->redirectTo("forum", "listMessages", $id);
     }
+
+    public function editerCategorie(){
+        $txt = filter_input(INPUT_POST, "texte", FILTER_SANITIZE_SPECIAL_CHARS);
+        $id = filter_input(INPUT_POST, "msg", FILTER_SANITIZE_NUMBER_INT);
+        var_dump($txt);
+        var_dump($id);
+        $managerCategorie = new CategorieManager();
+
+        if($txt && $id){
+            $managerCategorie->editer($txt,$id);
+
+        }else{
+            echo("Le texte ne peut pas être vide !"); 
+        }
+        
+        $this->redirectTo("forum", "listCategories");
+    } 
 
 
 }

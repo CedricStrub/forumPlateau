@@ -31,6 +31,7 @@ $categories = $result["data"]['categories'];
             if (App\Session::isAdmin() && $lock == 0) {
                 ?>
                 <td><a class="lien" href="./index.php?ctrl=forum&action=supprimerCategorie&id=<?= $categorie->getId() ?>"> 🗑</a></td>
+                <td><a class="lien" href="./index.php?ctrl=forum&action=editCategorie&id=<?= $categorie->getId() ?>">🖉</a></td>
             <?php
             }
             ?>
@@ -98,24 +99,33 @@ $categories = $result["data"]['categories'];
             <button class="nav_btn">Voir la liste des Membres</button>
             
             </a>
+            <table>
+            <tbody>
             <?php
             foreach($users as $user ){
                 ?>
-                <p><?=$user->getPseudo()?></p>
+
+                <tr>
+                    <td><span><?=$user->getPseudo()?></span></td>
                 <?php
                 if($user->getVerrouiller() == 0){
                     ?>
-                    <a class="lien" href="index.php?ctrl=home&action=verrouiller&id=<?= $user->getId() ?>"> 🔒</a>
+                    <td><a class="lien" href="index.php?ctrl=home&action=verrouiller&id=<?= $user->getId() ?>"> 🔓</a></td>
                     <?php
                 }else{
                     ?>
-                    <a class="lien" href="index.php?ctrl=home&action=deverrouiller&id=<?= $user->getId() ?>"> 🔓</a>
+                    <td><a class="lien" href="index.php?ctrl=home&action=deverrouiller&id=<?= $user->getId() ?>"> 🔒</a></td>
                     <?php
                 }
                 ?>
-                <a class="lien" href="index.php?ctrl=security&action=supprimerMembre&id=<?=$user->getId()?>"> 🗑</a>
+                <td><a class="lien" href="index.php?ctrl=security&action=supprimerMembre&id=<?=$user->getId()?>"> 🗑</a></td>
+                </tr>
                 <?php
             }
+            ?>
+            </tbody>
+            </table>
+            <?php
         }
         ?>
     </div>

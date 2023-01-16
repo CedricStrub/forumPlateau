@@ -17,6 +17,9 @@ body {
   background: var(--pri);
 }
 
+p {
+  margin: 0px;
+}
 
 .topnav {
   background-color: var(--pri);
@@ -78,7 +81,7 @@ body {
 }
 
 .left{
-  width: calc(20% - 15px);
+  width: calc(20% - 20px);
 }
 
 .nav_btn:hover{
@@ -106,8 +109,8 @@ body {
 }
 
 .right { 
-  align-items: right;
-  width: calc(20% - 15px);
+  float: right;
+  width: calc(20% - 20px);
 }
 
 .btn {
@@ -286,29 +289,20 @@ input{
   border: 1px solid #ccc;
   font-family: inherit;
   font-size: inherit;
-  padding: 1px 6px;
-  background: transparent;
-}
-.width-machine {
-  /*   Sort of a magic number to add extra space for number spinner */
-  padding: 0 1rem;
-}
-
-.textarea {
-  display: block;
-  width: 100%;
   overflow: hidden;
   resize: both;
   min-height: 40px;
-  line-height: 20px;
   background: transparent;
 }
 
-.textarea[contenteditable]:empty::before {
-  content: "Placeholder still possible";
-  color: gray;
+.txt_editor{
+  width: 100%;
+  height: 40vh;
 }
 
+.txt_editor table {
+  width: 100%;
+}
 
 #message {
   resize: none;
