@@ -40,12 +40,14 @@ class HomeController extends AbstractController implements ControllerInterface{
 
     public function verrouiller($id){
         $managerMembre = new MembreManager();
+        var_dump($id);
         $managerMembre->lock($id);
         $this->redirectTo("home", "users", $id);
     }
 
     public function deverrouiller($id){
         $managerMembre = new MembreManager();
+        var_dump($id);
         $managerMembre->unlock($id);
         $this->redirectTo("home", "users", $id);
     }

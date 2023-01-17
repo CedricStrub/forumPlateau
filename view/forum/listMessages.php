@@ -39,7 +39,7 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
             </tr>
             <br>
             <?php
-        }
+        } 
         ?>
         </tbody> 
         </table>

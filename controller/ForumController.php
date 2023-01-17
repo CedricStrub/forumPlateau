@@ -158,9 +158,10 @@ class ForumController extends AbstractController implements ControllerInterface{
             ];
 
             $managerMessages->add($data);
+            Session::addFlash("succes","Sujet Ajouté !");
             $this->redirectTo("forum", "listMessages", $sujet);
         }else{
-            echo "titre ou message vide";
+            Session::addFlash("error","titre ou message vide");
             $this->redirectTo("forum", "listSujets", $categorie);
         }
 
@@ -181,10 +182,11 @@ class ForumController extends AbstractController implements ControllerInterface{
             ];
 
             $managerMessages->add($data);
-            
+
+            Session::addFlash("succes","Message Ajouté !");
             $this->redirectTo("forum", "listMessages", $sujet);
         }else{
-            echo "titre ou message vide";
+            Session::addFlash("error","message vide");
             $this->redirectTo("forum", "listMessages", $sujet);
         }
     }
@@ -192,12 +194,14 @@ class ForumController extends AbstractController implements ControllerInterface{
     public function verrouiller($id){
         $managerSujet = new SujetManager();
         $managerSujet->lock($id);
+        Session::addFlash("succes","Sujet Verouillé !");
         $this->redirectTo("forum", "listMessages", $id);
     }
 
     public function deverrouiller($id){
         $managerSujet = new SujetManager();
         $managerSujet->unlock($id);
+        Session::addFlash("succes","Sujet Deverouillé !");
         $this->redirectTo("forum", "listMessages", $id);
     }
 
@@ -205,6 +209,7 @@ class ForumController extends AbstractController implements ControllerInterface{
         $managerSujet = new SujetManager();
         $managerSujet->deleteFrom($id);
         $managerSujet->delete($id);
+        Session::addFlash("succes","Sujet Supprimé !");
         $this->redirectTo("home");
     }
 
@@ -212,6 +217,7 @@ class ForumController extends AbstractController implements ControllerInterface{
         $managerMessage = new MessageManager();
         $sujet = $managerMessage->findOneById($id)->getSujet()->getId();
         $managerMessage->delete($id);
+        Session::addFlash("succes","Message Supprimé");
         $this->redirectTo("forum", "listMessages", $sujet);
     }
 
@@ -224,13 +230,19 @@ class ForumController extends AbstractController implements ControllerInterface{
                 "nom" => $nom
             ];
             $managerCategorie->add($data);
+            Session::addFlash("succes","Categorie Ajouté !");
+            $this->redirectTo("forum", "listCategories");
+        }else{
+            Session::addFlash("error","Le texte ne peut pas être vide !");
+            $this->redirectTo("forum", "listCategories");
         }
-        $this->redirectTo("forum", "listCategories");
+        
     }
 
     public function supprimerCategorie($id){
         $managerCategorie = new CategorieManager();
         $managerCategorie->delete($id);
+        Session::addFlash("succes","Categorie Supprimé !");
         $this->redirectTo("forum", "listCategories");
     }
 
@@ -244,9 +256,9 @@ class ForumController extends AbstractController implements ControllerInterface{
             $managerMessage->editer($txt,$id);
 
         }else{
-            echo("Le texte ne peut pas être vide !"); 
+            Session::addFlash("error","Le texte ne peut pas être vide !");
         }
-        
+        Session::addFlash("succes","Message modifié !");
         $this->redirectTo("forum", "editMessages", $id);
     } 
 
@@ -255,35 +267,31 @@ class ForumController extends AbstractController implements ControllerInterface{
         $id = filter_input(INPUT_POST, "msg", FILTER_SANITIZE_NUMBER_INT);
 
         $managerSujet = new SujetManager();
-        var_dump($txt);
-        var_dump($id);
 
         if($txt && $id){
-            
             $managerSujet->editer($txt,$id);
 
+            Session::addFlash("succes","Sujet modifié !");
+            $this->redirectTo("forum", "listMessages", $id);
         }else{
-            echo("Le texte ne peut pas être vide !"); 
+            Session::addFlash("error","Le texte ne peut pas être vide !");
+            $this->redirectTo("forum", "listMessages", $id);
         }
-
-        $this->redirectTo("forum", "listMessages", $id);
     }
 
     public function editerCategorie(){
         $txt = filter_input(INPUT_POST, "texte", FILTER_SANITIZE_SPECIAL_CHARS);
         $id = filter_input(INPUT_POST, "msg", FILTER_SANITIZE_NUMBER_INT);
-        var_dump($txt);
-        var_dump($id);
+    
         $managerCategorie = new CategorieManager();
 
         if($txt && $id){
             $managerCategorie->editer($txt,$id);
-
+            $this->redirectTo("forum", "listCategories");
         }else{
-            echo("Le texte ne peut pas être vide !"); 
+            Session::addFlash("error","Le texte ne peut pas être vide !");
+            $this->redirectTo("forum", "listCategories");
         }
-        
-        $this->redirectTo("forum", "listCategories");
     } 
 
 

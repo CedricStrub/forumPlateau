@@ -45,19 +45,28 @@ class SecurityController extends AbstractController implements ControllerInterfa
                         ];
 
                     }else{
-                        echo("Cette adresse e-mail et/ou pseudo est déjà utilisé !");
+                        Session::addFlash("error","Cette adresse e-mail et/ou pseudo est déjà utilisé !");
+                        return [
+                            "view" => VIEW_DIR."security/register.php"
+                        ];
                     }
                 }else{
-                    echo("le mot de passe ne satisfait pas les prérequis");
+                    Session::addFlash("error","le mot de passe ne satisfait pas les prérequis");
                     return [
                         "view" => VIEW_DIR."security/register.php"
                     ];
                 }
             }else{
-                echo("Les mots de passe ne correspondent pas");
+                Session::addFlash("error","Les mots de passe ne correspondent pas");
+                return [
+                    "view" => VIEW_DIR."security/register.php"
+                ];
             }
         }else{
-            echo("L'ensemble des champs n'ont pas été remplis");
+            Session::addFlash("error","L'ensemble des champs n'ont pas été remplis");
+            return [
+                "view" => VIEW_DIR."security/register.php"
+            ];
         }
 
     }
@@ -79,19 +88,19 @@ class SecurityController extends AbstractController implements ControllerInterfa
                     $Session->setUser($data);
                     $this->redirectTo("home");
                 }else{
-                    echo ("Mot de passe incorect !");
+                    Session::addFlash("error","Mot de passe incorect !");
                     return [
                         "view" => VIEW_DIR."security/login.php"
                     ];
                 }
             } else {
-                echo ("Identifiant incorrect !");
+                Session::addFlash("error","Identifiant incorrect !");
                 return [
                     "view" => VIEW_DIR."security/login.php"
                 ];
             }
         }else{
-            echo("Champs incomplet !");
+            Session::addFlash("error","Champs incomplet !");
             return [
                 "view" => VIEW_DIR."security/login.php"
             ];

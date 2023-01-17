@@ -14,6 +14,24 @@
 </head>
 <body>
     <header>
+    <script>
+    tinymce.init({
+        selector: ".textarea",
+        menubar: false,
+        height: 250,
+        skin_url: "./public/node_modules/tinymce/skins/ui/forum",
+        content_css: "./public/node_modules/tinymce/skins/content/forum",
+        plugins: "importcss",
+        content_style: "body{color:rgb(190, 237, 255);line-height: 1;} p{margin:0px;}",
+        importcss_append: true,
+        });
+        /*
+        if (typeof tinymce != "undefined") {
+            alert("GOT THERE");
+        }
+        */
+    </script>
+
         <div class="topnav">
         <div class="titre"><span>Forum</span>
             <a class="btn" href="/CedricStrub/forumPlateau/index.php">Accueil</a>
@@ -40,6 +58,7 @@
         <h3 class="message" style="color: green"><?= App\Session::getFlash("success") ?></h3>
             <main id="forum">
                 <?= $page ?>
+                <div class="spacer10"></div>
             </main>
         </div>
         <footer>
@@ -63,19 +82,6 @@
             }
         </script>
     
-    <script>
-    tinymce.init({
-        selector: ".textarea",
-        menubar: false,
-        height: 250,
-        skin_url: "./public/node_modules/tinymce/skins/ui/forum",
-        content_css: "./public/node_modules/tinymce/skins/content/forum",
-        plugins: "importcss",
-        content_style: "body{color:rgb(190, 237, 255);line-height: 1;} p{margin:0px;}",
-        importcss_append: true,
-        });
-    </script>
-
     <script
         src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="

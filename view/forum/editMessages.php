@@ -314,7 +314,7 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
         if ($sujet->getVerrouillage() == 0) {
             ?>
         <h1>Répondre</h1>
-        <form action="index.php?ctrl=forum&action=addMessage" method="post">
+        <form class="txt_editor" action="index.php?ctrl=forum&action=addMessage" method="post">
         <table>
         <input type = "hidden" name = "sujet" value = <?= $sujet->getId() ?> />
             <tbody>
@@ -322,7 +322,7 @@ $link = "./index.php?ctrl=forum&action=listSujets&id=" . $sujet->getCategorie()-
                     <td><span class="f_titre">Message</span></td>
                 </tr>
                 <tr>
-                    <td><textarea id="message" name="message" row="10" cols="100" placeholder="message"></textarea></td>
+                    <td><textarea class="textarea" name="message" row="10" cols="100" placeholder="message"></textarea></td>
                 </tr>
                 <tr>
                     <td><input class="nav_btn limit_btn" type="submit" value="Submit"></td>

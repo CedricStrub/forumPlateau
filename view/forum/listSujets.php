@@ -141,7 +141,7 @@ $categories = $result["data"]['categories'];
             <div class="C_content  ext_cat">
             <h1>Nouveau Sujet</h1>
             </div>
-            <form action="index.php?ctrl=forum&action=addSujet" method="post">
+            <form class="txt_editor" action="index.php?ctrl=forum&action=addSujet" method="post">
             <table>
             <input type = "hidden" name = "categorie" value = <?=$cat->getId()?> />
                 <tbody>
@@ -155,7 +155,7 @@ $categories = $result["data"]['categories'];
                         <td><span class="f_titre">Message</span></td>
                     </tr>
                     <tr>
-                        <td><input type="textarea" class="textarea" id="message" name="message" placeholder="message"></td>
+                        <td><input class="textarea" id="message" name="message" placeholder="message"></td>
                     </tr>
                     <tr>
                         <td><input class="nav_btn limit_btn" type="submit" value="Submit"></td>
